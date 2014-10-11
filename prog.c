@@ -6,30 +6,20 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define getIndex(x,y) y*width + x
+#define getIndex(x,y) (y*width + x)
 #define born(x,y) (getNrAlive(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
 
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
-
 void updateLife();
-void printLife(int it);
+void printLife();
 
 int height, width, size;	// to store the number of heights and the number of widthums of the screen
-bool *buffer1, *buffer2;
 bool *current, *previous;
 
 int main(int argc, char **argv)
 {
-	for(int i=0; i<9; i++)
-	{
-		bool org = (i < 2) || (i > 3);
-		bool new = !(((unsigned int)i-2)<2);
-		
-		printf("i: %s %s\n", org ? "true":"false", new ? "true":"false");
-	}
-	
 	initscr();						// start the curses mode
 	getmaxyx(stdscr,height,width);	// get the number of heights and widthumns
 	halfdelay(1);					// Set timeout on getch()
@@ -41,12 +31,9 @@ int main(int argc, char **argv)
 	curs_set(0);							// Disable the cursor
 	
 	size = height*width;
-		
-	bool *buffer1 = calloc(size, sizeof(bool));
-	bool *buffer2 = calloc(size, sizeof(bool));
 	
-	current = buffer1;
-	previous = buffer2;
+	current = calloc(size, sizeof(bool));
+	previous = calloc(size, sizeof(bool));
 	
 	bool loadDemo = true;
 	
@@ -61,22 +48,19 @@ int main(int argc, char **argv)
 		readFile("demo.life");
 	}
 	
-	int iteration = 0;
-	printLife(iteration++);
+	printLife();
 	
 	while(getch() == ERR)
 		;// Wait for user to press a button
 	
 	while(true)
 	{
-		// Switch buffer
-		bool *temp = previous;
-		previous = current;
-		current = temp;
+		previous = (bool*) ((int)previous ^ (int)current);	// Swap buffer
+		current = (bool*) ((int)previous ^ (int)current);
+		previous = (bool*) ((int)previous ^ (int)current);
 		
 		updateLife();
-		printLife(iteration);
-		iteration++;
+		printLife();
 		
 		int ch = getch();
 		if(ch == 'q' || ch == 'Q')
@@ -86,9 +70,6 @@ int main(int argc, char **argv)
 	}
 	
 	endwin();
-
-	free(buffer1);
-	free(buffer2);
 }
 
 int getNrAlive(int x, int y)
@@ -167,8 +148,9 @@ void updateLife()
 	}
 }
 
-void printLife(int it)
+void printLife()
 {
+	static int iteration;
 	move(0,0);
 	for(int i=0; i<size; i++)
 	{
@@ -181,7 +163,7 @@ void printLife(int it)
 			addch(' ');
 		}
 	}
-	mvprintw(0,0,"Iteration: %d", it);
+	mvprintw(0,0,"Iteration: %d", iteration++);
 	refresh();
 }
 
