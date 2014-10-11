@@ -8,11 +8,10 @@
 
 #define getIndex(x,y) y*width + x
 #define born(x,y) (getNrAlive(x, y) == 3)
+#define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
 
 int getNrAlive(int x, int y);
-bool dies(int x, int y);
-
-
+bool readFile(char *filename);
 
 void updateLife();
 void printLife(int it);
@@ -21,64 +20,16 @@ int height, width, size;	// to store the number of heights and the number of wid
 bool *buffer1, *buffer2;
 bool *current, *previous;
 
-bool readFile(char *filename)
-{
-	bool retVal = false;
-	FILE *readFP = fopen(filename, "r");
-	bool startOfLine = true;
-	bool skipLine = false;
-	
-	if ( readFP != NULL )
-	{
-		retVal = true;
-
-		int x = 0;
-		int y = 0;
-		int ch;
-		while  ((ch = fgetc( readFP ) ) != EOF )
-		{
-			if(startOfLine)
-			{
-				startOfLine = false;
-				if(ch == '!')
-				{
-					skipLine = true;
-				}
-			}
-			
-			if(ch == '\n')
-			{
-				y++;
-				x=0;
-				startOfLine = true;
-				skipLine = false;
-			}
-			else if(!skipLine)
-			{
-				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
-				x++;
-			}
-			
-			if(x >= width)
-			{
-				x = 0;
-				y++;
-			}
-			
-			if(y >= height)
-			{
-				break;
-			}
-		}
-	}	
-	fclose(readFP);
-	
-	return retVal;
-}
-
-
 int main(int argc, char **argv)
 {
+	for(int i=0; i<9; i++)
+	{
+		bool org = (i < 2) || (i > 3);
+		bool new = !(((unsigned int)i-2)<2);
+		
+		printf("i: %s %s\n", org ? "true":"false", new ? "true":"false");
+	}
+	
 	initscr();						// start the curses mode
 	getmaxyx(stdscr,height,width);	// get the number of heights and widthumns
 	halfdelay(1);					// Set timeout on getch()
@@ -182,12 +133,6 @@ int getNrAlive(int x, int y)
 	return nrAlive;
 }
 
-bool dies(int x, int y)
-{
-	int nrAlive = getNrAlive(x, y);
-	return (nrAlive < 2) || (nrAlive > 3);
-}
-
 void updateLife()
 {
 	for(int y=0; y<height ; y++)
@@ -238,4 +183,59 @@ void printLife(int it)
 	}
 	mvprintw(0,0,"Iteration: %d", it);
 	refresh();
+}
+
+bool readFile(char *filename)
+{
+	bool retVal = false;
+	FILE *readFP = fopen(filename, "r");
+	bool startOfLine = true;
+	bool skipLine = false;
+	
+	if ( readFP != NULL )
+	{
+		retVal = true;
+
+		int x = 0;
+		int y = 0;
+		int ch;
+		while  ((ch = fgetc( readFP ) ) != EOF )
+		{
+			if(startOfLine)
+			{
+				startOfLine = false;
+				if(ch == '!')
+				{
+					skipLine = true;
+				}
+			}
+			
+			if(ch == '\n')
+			{
+				y++;
+				x=0;
+				startOfLine = true;
+				skipLine = false;
+			}
+			else if(!skipLine)
+			{
+				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
+				x++;
+			}
+			
+			if(x >= width)
+			{
+				x = 0;
+				y++;
+			}
+			
+			if(y >= height)
+			{
+				break;
+			}
+		}
+	}	
+	fclose(readFP);
+	
+	return retVal;
 }
