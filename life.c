@@ -12,65 +12,10 @@ bool dies(bool *previous, int x, int y);
 bool born(bool *previous, int x, int y);
 void updateLife(bool *previous, bool *current);
 void printLife(bool *current, int it);
+bool readFile(bool *current, char *filename);
 
 int height, width, size;	// to store the number of heights and the number of widthums of the screen
 bool *buffer1, *buffer2;
-
-bool readFile(bool *current, char *filename)
-{
-	bool retVal = false;
-	FILE *readFP = fopen(filename, "r");
-	bool startOfLine = true;
-	bool skipLine = false;
-	
-	if ( readFP != NULL )
-	{
-		retVal = true;
-
-		int x = 0;
-		int y = 0;
-		int ch;
-		while  ((ch = fgetc( readFP ) ) != EOF )
-		{
-			if(startOfLine)
-			{
-				startOfLine = false;
-				if(ch == '!')
-				{
-					skipLine = true;
-				}
-			}
-			
-			if(ch == '\n')
-			{
-				y++;
-				x=0;
-				startOfLine = true;
-				skipLine = false;
-			}
-			else if(!skipLine)
-			{
-				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
-				x++;
-			}
-			
-			if(x >= width)
-			{
-				x = 0;
-				y++;
-			}
-			
-			if(y >= height)
-			{
-				break;
-			}
-		}
-	}	
-	fclose(readFP);
-	
-	return retVal;
-}
-
 
 int main(int argc, char **argv)
 {
@@ -102,7 +47,19 @@ int main(int argc, char **argv)
 	
 	if(loadDemo)
 	{
-		readFile(current, "demo.life");
+		int progNameLength = strlen(argv[0]);
+	
+		char extension[] = ".life";
+		int extensionLength = strlen(extension);
+		printf("progNameLength: %d %s\n", progNameLength, argv[0]);
+		printf("extensionLength: %d %s\n", extensionLength, extension);
+		
+		char *filename = calloc( progNameLength + extensionLength + 1, 1);
+		memcpy(filename, argv[0], progNameLength);
+		memcpy(filename+progNameLength, extension, extensionLength);
+
+		printf("Filename: %s\n", filename);
+		readFile(current, filename);
 	}
 	
 	int iteration = 0;
@@ -244,4 +201,64 @@ void printLife(bool *current, int it)
 	}
 	mvprintw(0,0,"Iteration: %d", it);
 	refresh();
+}
+
+bool readFile(bool *current, char *filename)
+{
+	bool retVal = false;
+	FILE *readFP = fopen(filename, "r");
+	if(readFP == NULL)
+	{
+		return false;
+	}
+	
+	bool startOfLine = true;
+	bool skipLine = false;
+	
+	if ( readFP != NULL )
+	{
+		retVal = true;
+
+		int x = 0;
+		int y = 0;
+		int ch;
+		while  ((ch = fgetc( readFP ) ) != EOF )
+		{
+			if(startOfLine)
+			{
+				startOfLine = false;
+				if(ch == '!')
+				{
+					skipLine = true;
+				}
+			}
+			
+			if(ch == '\n')
+			{
+				y++;
+				x=0;
+				startOfLine = true;
+				skipLine = false;
+			}
+			else if(!skipLine)
+			{
+				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
+				x++;
+			}
+			
+			if(x >= width)
+			{
+				x = 0;
+				y++;
+			}
+			
+			if(y >= height)
+			{
+				break;
+			}
+		}
+	}	
+	fclose(readFP);
+	
+	return retVal;
 }

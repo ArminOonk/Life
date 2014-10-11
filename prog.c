@@ -9,6 +9,8 @@
 #define getIndex(x,y) (y*width + x)
 #define born(x,y) (getNrAlive(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
+#define ALIVE 0x2a
+#define DEAD 0x20
 
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
@@ -150,19 +152,19 @@ void updateLife()
 
 void printLife()
 {
-	static int iteration;
 	move(0,0);
 	for(int i=0; i<size; i++)
 	{
 		if(current[i])
 		{
-			addch('*');
+			addch(ALIVE);
 		}
 		else
 		{
-			addch(' ');
+			addch(DEAD);
 		}
 	}
+	static int iteration;
 	mvprintw(0,0,"Iteration: %d", iteration++);
 	refresh();
 }
