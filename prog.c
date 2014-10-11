@@ -9,11 +9,16 @@
 #define getIndex(x,y) (y*width + x)
 #define born(x,y) (getNrAlive(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
-#define ALIVE 0x0a
-#define DEAD 0x20
+
 #define size (height*width)
 #define EXTENSION ".life"
 #define SWAP (bool*) ((int)previous ^ (int)current);
+
+#define COMMENT 0x21
+#define STOP 0x71 
+#define EMPTY 0x2e
+#define ALIVE 0x0a
+#define DEAD 0x20
 
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
@@ -24,7 +29,7 @@ int height, width;	// to store the number of heights and the number of widthums 
 bool *current, *previous;
 
 int main(int argc, char **argv)
-{
+{		
 	initscr();								// start the curses mode
 	getmaxyx(stdscr,height,width);			// get the number of heights and widthumns
 	halfdelay(1);							// Set timeout on getch()
@@ -35,9 +40,9 @@ int main(int argc, char **argv)
 		
 	curs_set(0);							// Disable the cursor
 		
-	current = calloc(size, sizeof(bool));
-	previous = calloc(size, sizeof(bool));
-	
+	current = calloc(size<<1, sizeof(bool));
+	previous = current+size;
+		
 	bool loadDemo = true;
 	
 	// Initial board
@@ -69,7 +74,7 @@ int main(int argc, char **argv)
 		printLife();
 		
 		int ch = getch();
-		if(ch == 'q' || ch == 'Q')
+		if(ch == STOP || ch == (STOP-0x20))
 		{
 			break;
 		}
@@ -190,7 +195,7 @@ bool readFile(char *filename)
 			if(startOfLine)
 			{
 				startOfLine = false;
-				if(ch == '!')
+				if(ch == COMMENT)
 				{
 					skipLine = true;
 				}
@@ -205,7 +210,7 @@ bool readFile(char *filename)
 			}
 			else if(!skipLine)
 			{
-				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
+				current[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY); // Make it alive when not space
 				x++;
 			}
 			
