@@ -85,9 +85,7 @@ int main(int argc, char **argv)
 	curs_set(0);							// Disable the cursor
 	
 	size = height*width;
-	
-	//printf("Dimension: heights %d widths %d Size: %d\n", height, width, size);
-	
+		
 	bool *buffer1 = calloc(size, sizeof(bool));
 	bool *buffer2 = calloc(size, sizeof(bool));
 	

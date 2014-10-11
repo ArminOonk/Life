@@ -11,66 +11,17 @@ int getNrAlive(bool *previous, int x, int y);
 bool dies(bool *previous, int x, int y);
 bool born(bool *previous, int x, int y);
 void updateLife(bool *previous, bool *current);
-void printLife(bool *current);
+void printLife(bool *current, int it);
 
 int height, width, size;	// to store the number of heights and the number of widthums of the screen
 bool *buffer1, *buffer2;
-
-void makeBlinkerH(bool *current, int x, int y)
-{
-	for(int i=0 ; i<3 ; i++)
-	{
-		current[getIndex(x+i,y)] = true;
-	}
-}
-
-void makeBlinkerV(bool *current, int x, int y)
-{
-	for(int i=0 ; i<3 ; i++)
-	{
-		current[getIndex(x,y+i)] = true;
-	}
-}
-
-void makeToad(bool *current, int x, int y)
-{
-	for(int i=0; i<3 ; i++)
-	{
-		current[getIndex(x+i+1,y)] = true;
-		current[getIndex(x+i,y+1)] = true;
-	}
-}
-
-void makeGlider(bool *current, int x, int y)
-{
-	current[getIndex(x,y)] = true;
-	current[getIndex(x+1,y+1)] = true;
-	current[getIndex(x+1,y+2)] = true;
-	current[getIndex(x+2,y+1)] = true;
-	current[getIndex(x+2,y)] = true;
-}
-
-void printLife(bool *current)
-{
-	move(0,0);
-	for(int i=0; i<size; i++)
-	{
-		if(current[i])
-		{
-			addch('*');
-		}
-		else
-		{
-			addch(' ');
-		}
-	}
-	refresh();
-}
 
 bool readFile(bool *current, char *filename)
 {
 	bool retVal = false;
 	FILE *readFP = fopen(filename, "r");
+	bool startOfLine = true;
+	bool skipLine = false;
 	
 	if ( readFP != NULL )
 	{
@@ -81,14 +32,25 @@ bool readFile(bool *current, char *filename)
 		int ch;
 		while  ((ch = fgetc( readFP ) ) != EOF )
 		{
+			if(startOfLine)
+			{
+				startOfLine = false;
+				if(ch == '!')
+				{
+					skipLine = true;
+				}
+			}
+			
 			if(ch == '\n')
 			{
 				y++;
 				x=0;
+				startOfLine = true;
+				skipLine = false;
 			}
-			else 
+			else if(!skipLine)
 			{
-				current[getIndex(x,y)] = !isspace(ch); // Make it alive when not space
+				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
 				x++;
 			}
 			
@@ -114,7 +76,7 @@ int main(int argc, char **argv)
 {
 	initscr();						// start the curses mode
 	getmaxyx(stdscr,height,width);	// get the number of heights and widthumns
-	halfdelay(3);					// Set timeout on getch()
+	halfdelay(1);					// Set timeout on getch()
 	
 	start_color();					// Start color
 	init_pair(1, COLOR_RED, COLOR_WHITE);	// Create pair
@@ -123,7 +85,7 @@ int main(int argc, char **argv)
 	curs_set(0);							// Disable the cursor
 	
 	size = height*width;
-	
+		
 	bool *buffer1 = calloc(size, sizeof(bool));
 	bool *buffer2 = calloc(size, sizeof(bool));
 	
@@ -140,15 +102,16 @@ int main(int argc, char **argv)
 	
 	if(loadDemo)
 	{
-		makeBlinkerH(current, 5, 5);
-		makeBlinkerV(current, 10, 5);
-		makeToad(current, 20, 5);
-		makeGlider(current, 30, 5);
+		readFile(current, "demo.life");
 	}
 	
-	printLife(current);
+	int iteration = 0;
+	printLife(current, iteration++);
 	
-	while(getch() != 'q')
+	while(getch() == ERR)
+		;// Wait for user to press a button
+	
+	while(true)
 	{
 		// Switch buffer
 		bool *temp = previous;
@@ -156,7 +119,14 @@ int main(int argc, char **argv)
 		current = temp;
 		
 		updateLife(previous, current);
-		printLife(current);
+		printLife(current, iteration);
+		iteration++;
+		
+		int ch = getch();
+		if(ch == 'q' || ch == 'Q')
+		{
+			break;
+		}
 	}
 	
 	endwin();
@@ -256,4 +226,22 @@ void updateLife(bool *previous, bool *current)
 			}
 		}
 	}
+}
+
+void printLife(bool *current, int it)
+{
+	move(0,0);
+	for(int i=0; i<size; i++)
+	{
+		if(current[i])
+		{
+			addch('*');
+		}
+		else
+		{
+			addch(' ');
+		}
+	}
+	mvprintw(0,0,"Iteration: %d", it);
+	refresh();
 }
