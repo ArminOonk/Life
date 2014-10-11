@@ -163,42 +163,49 @@ bool readFile(char *filename)
 		int x = 0;
 		int y = 0;
 		int ch;
-		while  ((ch = fgetc( readFP ) ) != EOF )
+notEOF:
+		ch = fgetc( readFP );
+		
+		if(ch == EOF)
 		{
-			if(startOfLine)
+			goto done;
+		}
+		
+		if(startOfLine)
+		{
+			startOfLine = false;
+			if(ch == COMMENT)
 			{
-				startOfLine = false;
-				if(ch == COMMENT)
-				{
-					skipLine = true;
-				}
-			}
-			
-			if(ch == '\n')
-			{
-				y++;
-				x=0;
-				startOfLine = true;
-				skipLine = false;
-			}
-			else if(!skipLine)
-			{
-				current[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY); // Make it alive when not space
-				x++;
-			}
-			
-			if(x >= width)
-			{
-				x = 0;
-				y++;
-			}
-			
-			if(y >= height)
-			{
-				break;
+				skipLine = true;
 			}
 		}
+		
+		if(ch == '\n')
+		{
+			y++;
+			x=0;
+			startOfLine = true;
+			skipLine = false;
+		}
+		else if(!skipLine)
+		{
+			current[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY); // Make it alive when not space
+			x++;
+		}
+		
+		if(x >= width)
+		{
+			x = 0;
+			y++;
+		}
+		
+		if(y >= height)
+		{
+			goto notEOF;
+		}
+		goto notEOF;
 	}	
+	done:
 	fclose(readFP);
 	
 	return retVal;
