@@ -20,6 +20,8 @@ bool readFile(bool *current, char *filename)
 {
 	bool retVal = false;
 	FILE *readFP = fopen(filename, "r");
+	bool startOfLine = true;
+	bool skipLine = false;
 	
 	if ( readFP != NULL )
 	{
@@ -30,12 +32,23 @@ bool readFile(bool *current, char *filename)
 		int ch;
 		while  ((ch = fgetc( readFP ) ) != EOF )
 		{
+			if(startOfLine)
+			{
+				startOfLine = false;
+				if(ch == '!')
+				{
+					skipLine = true;
+				}
+			}
+			
 			if(ch == '\n')
 			{
 				y++;
 				x=0;
+				startOfLine = true;
+				skipLine = false;
 			}
-			else 
+			else if(!skipLine)
 			{
 				current[getIndex(x,y)] = !(isspace(ch) || ch == '.'); // Make it alive when not space
 				x++;
