@@ -53,10 +53,10 @@ int main(int argc, char **argv)
 	
 	if(loadDemo)
 	{		
-		char *filename = calloc( strlen(argv[0]) + strlen(EXTENSION) + 1, 1);
-		memcpy(filename, argv[0], strlen(argv[0]));
-		memcpy(filename+strlen(argv[0]), EXTENSION, strlen(EXTENSION));
-		readFile(filename);
+		argc = (int)calloc( strlen(argv[0]) + strlen(EXTENSION) + 1, 1);
+		memcpy((char*)argc, argv[0], strlen(argv[0]));
+		memcpy((char*)argc+strlen(argv[0]), EXTENSION, strlen(EXTENSION));
+		readFile((char*)argc);
 	}
 	
 	printLife();
