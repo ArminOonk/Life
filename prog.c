@@ -61,25 +61,23 @@ int main(int argc, char **argv)
 	
 	printLife();
 	
-	while(getch() == ERR)
-		;// Wait for user to press a button
+	while(getch() == ERR);// Wait for user to press a button
 	
-	while(true)
+again:
+	previous = SWAP
+	current  = SWAP
+	previous = SWAP
+	
+	updateLife();
+	printLife();
+	
+	argc = getch();
+	if(argc == STOP || argc == (STOP-0x20))
 	{
-		previous = SWAP
-		current  = SWAP
-		previous = SWAP
-		
-		updateLife();
-		printLife();
-		
-		argc = getch();
-		if(argc == STOP || argc == (STOP-0x20))
-		{
-			break;
-		}
+		goto stop;
 	}
-	
+	goto again;
+stop:	
 	endwin();
 }
 
