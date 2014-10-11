@@ -40,9 +40,8 @@ int main(int argc, char **argv)
 		
 	curs_set(0);							// Disable the cursor
 		
-	current = calloc(size<<1, sizeof(bool));
-	previous = current+size;
-		
+	current = calloc(size<<1, sizeof(bool));// Create a double sized buffer  
+	previous = current+size;				// Set previous to half of the buffer
 	bool loadDemo = true;
 	
 	// Initial board
@@ -73,9 +72,7 @@ again:
 	
 	argc = getch();
 	if(argc == STOP || argc == (STOP-0x20))
-	{
 		goto stop;
-	}
 	goto again;
 stop:	
 	endwin();
@@ -133,25 +130,11 @@ void updateLife()
 			if(previous[index])
 			{
 				//Are we going to die?
-				if(dies(x, y))
-				{
-					current[index] = false; // We died
-				}
-				else
-				{
-					current[index] = true; // Alive
-				}
+				dies(x, y) ? (current[index] = false) : (current[index] = true);
 			}
 			else
 			{
-				if(born(x, y))
-				{
-					current[index] = true; // Alive
-				}
-				else
-				{
-					current[index] = false; // We died
-				}
+				born(x, y) ? (current[index] = true) : (current[index] = false);
 			}
 		}
 	}
