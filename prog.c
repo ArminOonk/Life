@@ -9,7 +9,7 @@
 #define getIndex(x,y) (y*width + x)
 #define born(x,y) (getNrAlive(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
-#define ALIVE 0x2a
+#define ALIVE 0x0a
 #define DEAD 0x20
 
 int getNrAlive(int x, int y);
@@ -22,11 +22,11 @@ bool *current, *previous;
 
 int main(int argc, char **argv)
 {
-	initscr();						// start the curses mode
-	getmaxyx(stdscr,height,width);	// get the number of heights and widthumns
-	halfdelay(1);					// Set timeout on getch()
+	initscr();								// start the curses mode
+	getmaxyx(stdscr,height,width);			// get the number of heights and widthumns
+	halfdelay(1);							// Set timeout on getch()
 	
-	start_color();					// Start color
+	start_color();							// Start color
 	init_pair(1, COLOR_RED, COLOR_WHITE);	// Create pair
 	attron(COLOR_PAIR(1));					// Set pair
 		
@@ -46,16 +46,10 @@ int main(int argc, char **argv)
 	}
 	
 	if(loadDemo)
-	{
-		int progNameLength = strlen(argv[0]);
-	
-		char extension[] = ".life";
-		int extensionLength = strlen(extension);
-		
-		char *filename = calloc( progNameLength + extensionLength + 1, 1);
-		memcpy(filename, argv[0], progNameLength);
-		memcpy(filename+progNameLength, extension, extensionLength);
-		
+	{		
+		char *filename = calloc( strlen(argv[0]) + strlen(".life") + 1, 1);
+		memcpy(filename, argv[0], strlen(argv[0]));
+		memcpy(filename+strlen(argv[0]), ".life", strlen(".life"));
 		readFile(filename);
 	}
 	
@@ -164,14 +158,7 @@ void printLife()
 	move(0,0);
 	for(int i=0; i<size; i++)
 	{
-		if(current[i])
-		{
-			addch(ALIVE);
-		}
-		else
-		{
-			addch(DEAD);
-		}
+		i[current] ? addch(DEAD|ALIVE) : addch(DEAD);
 	}
 	static int iteration;
 	mvprintw(0,0,"Iteration: %d", iteration++);
