@@ -126,28 +126,8 @@ void updateLife(int x, int y)
 	previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
 	x++;
 	
-	if(x >= width)
-	{
-		x = 0;
-		y++;
-	}
-	
-	if(y >= height)
-	{
-		return;
-	}
-	
-	updateLife(x, y);
-		
-	
-	/*for(int y=0; y<height ; y++)
-	{
-		for(int x=0; x<width; x++)
-		{
-			int index = getIndex(x,y);
-			previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
-		}
-	}*/
+	(x >= width) ? (x = 0,	y++) : 0;
+	(y < height+1) ?  updateLife(x, y) : 0;
 }
 
 void printLife()
