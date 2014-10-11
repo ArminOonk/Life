@@ -7,7 +7,8 @@ ARCH=
 LIBS= -lncurses
 CFLAGS= ${CWARN} ${CSTD} ${ARCH} ${OPT} ${LIBS}
 
-ENTRY= prog
+ENTRY= life
+
 all: ${ENTRY}
 	@${TRUE}
 
