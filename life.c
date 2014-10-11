@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 	while(getch() == ERR)
 		;// Wait for user to press a button
 	
-	while(getch() != 'q')
+	while(true)
 	{
 		// Switch buffer
 		bool *temp = previous;
@@ -123,6 +123,12 @@ int main(int argc, char **argv)
 		updateLife(previous, current);
 		printLife(current, iteration);
 		iteration++;
+		
+		int ch = getch();
+		if(ch == 'q' || ch == 'Q')
+		{
+			break;
+		}
 	}
 	
 	endwin();
