@@ -73,8 +73,8 @@ int main(int argc, char **argv)
 		updateLife();
 		printLife();
 		
-		int ch = getch();
-		if(ch == STOP || ch == (STOP-0x20))
+		argc = getch();
+		if(argc == STOP || argc == (STOP-0x20))
 		{
 			break;
 		}
