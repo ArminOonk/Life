@@ -6,17 +6,22 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int getIndex(int x, int y);
-int getNrAlive(bool *previous, int x, int y);
-bool dies(bool *previous, int x, int y);
-bool born(bool *previous, int x, int y);
-void updateLife(bool *previous, bool *current);
-void printLife(bool *current, int it);
+#define getIndex(x,y) y*width + x
+#define born(x,y) (getNrAlive(x, y) == 3)
+
+int getNrAlive(int x, int y);
+bool dies(int x, int y);
+
+
+
+void updateLife();
+void printLife(int it);
 
 int height, width, size;	// to store the number of heights and the number of widthums of the screen
 bool *buffer1, *buffer2;
+bool *current, *previous;
 
-bool readFile(bool *current, char *filename)
+bool readFile(char *filename)
 {
 	bool retVal = false;
 	FILE *readFP = fopen(filename, "r");
@@ -89,24 +94,24 @@ int main(int argc, char **argv)
 	bool *buffer1 = calloc(size, sizeof(bool));
 	bool *buffer2 = calloc(size, sizeof(bool));
 	
-	bool *current = buffer1;
-	bool *previous = buffer2;
+	current = buffer1;
+	previous = buffer2;
 	
 	bool loadDemo = true;
 	
 	// Initial board
 	if(argc > 1)
 	{
-		loadDemo = !readFile(current, argv[1]);
+		loadDemo = !readFile(argv[1]);
 	}
 	
 	if(loadDemo)
 	{
-		readFile(current, "demo.life");
+		readFile("demo.life");
 	}
 	
 	int iteration = 0;
-	printLife(current, iteration++);
+	printLife(iteration++);
 	
 	while(getch() == ERR)
 		;// Wait for user to press a button
@@ -118,8 +123,8 @@ int main(int argc, char **argv)
 		previous = current;
 		current = temp;
 		
-		updateLife(previous, current);
-		printLife(current, iteration);
+		updateLife();
+		printLife(iteration);
 		iteration++;
 		
 		int ch = getch();
@@ -135,12 +140,7 @@ int main(int argc, char **argv)
 	free(buffer2);
 }
 
-int getIndex(int x, int y)
-{
-	return y*width + x;
-} 
-
-int getNrAlive(bool *previous, int x, int y)
+int getNrAlive(int x, int y)
 {
 	int nrAlive = 0;
 	for(int dy=(y-1); dy<= (y+1); dy++)
@@ -182,19 +182,13 @@ int getNrAlive(bool *previous, int x, int y)
 	return nrAlive;
 }
 
-bool dies(bool *previous, int x, int y)
+bool dies(int x, int y)
 {
-	int nrAlive = getNrAlive(previous, x, y);
+	int nrAlive = getNrAlive(x, y);
 	return (nrAlive < 2) || (nrAlive > 3);
 }
 
-bool born(bool *previous, int x, int y)
-{
-	int nrAlive = getNrAlive(previous, x, y);
-	return (nrAlive == 3);
-}
-
-void updateLife(bool *previous, bool *current)
+void updateLife()
 {
 	for(int y=0; y<height ; y++)
 	{
@@ -204,7 +198,7 @@ void updateLife(bool *previous, bool *current)
 			if(previous[index])
 			{
 				//Are we going to die?
-				if(dies(previous,  x, y))
+				if(dies(x, y))
 				{
 					current[index] = false; // We died
 				}
@@ -215,7 +209,7 @@ void updateLife(bool *previous, bool *current)
 			}
 			else
 			{
-				if(born(previous, x, y))
+				if(born(x, y))
 				{
 					current[index] = true; // Alive
 				}
@@ -228,7 +222,7 @@ void updateLife(bool *previous, bool *current)
 	}
 }
 
-void printLife(bool *current, int it)
+void printLife(int it)
 {
 	move(0,0);
 	for(int i=0; i<size; i++)

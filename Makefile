@@ -9,9 +9,11 @@ CFLAGS= ${CWARN} ${CSTD} ${ARCH} ${OPT} ${LIBS}
 
 ENTRY= life
 
-all: ${ENTRY}
+all: ${ENTRY} prog
 	@${TRUE}
 
 ${ENTRY}: ${ENTRY}.c
 	${CC} $< -o $@ ${CFLAGS}
 	
+prog: prog.c
+	${CC} $< -o $@ ${CFLAGS}
