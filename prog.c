@@ -47,7 +47,16 @@ int main(int argc, char **argv)
 	
 	if(loadDemo)
 	{
-		readFile("demo.life");
+		int progNameLength = strlen(argv[0]);
+	
+		char extension[] = ".life";
+		int extensionLength = strlen(extension);
+		
+		char *filename = calloc( progNameLength + extensionLength + 1, 1);
+		memcpy(filename, argv[0], progNameLength);
+		memcpy(filename+progNameLength, extension, extensionLength);
+		
+		readFile(filename);
 	}
 	
 	printLife();
@@ -173,6 +182,11 @@ bool readFile(char *filename)
 {
 	bool retVal = false;
 	FILE *readFP = fopen(filename, "r");
+	if(readFP == NULL)
+	{
+		return false;
+	}
+	
 	bool startOfLine = true;
 	bool skipLine = false;
 	
