@@ -22,7 +22,7 @@
 
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
-void updateLife();
+void updateLife(int x, int y);
 void printLife();
 
 int height, width;	// to store the number of heights and the number of widthums of the screen
@@ -67,7 +67,7 @@ again:
 	current  = SWAP
 	previous = SWAP
 	
-	updateLife();
+	updateLife(0,0);
 	printLife();
 	
 	argc = getch();
@@ -120,16 +120,34 @@ int getNrAlive(int x, int y)
 	return nrAlive;
 }
 
-void updateLife()
+void updateLife(int x, int y)
 {
-	for(int y=0; y<height ; y++)
+	int index = getIndex(x,y);
+	previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
+	x++;
+	
+	if(x >= width)
+	{
+		x = 0;
+		y++;
+	}
+	
+	if(y >= height)
+	{
+		return;
+	}
+	
+	updateLife(x, y);
+		
+	
+	/*for(int y=0; y<height ; y++)
 	{
 		for(int x=0; x<width; x++)
 		{
 			int index = getIndex(x,y);
 			previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
 		}
-	}
+	}*/
 }
 
 void printLife()
