@@ -11,13 +11,16 @@
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
 #define ALIVE 0x0a
 #define DEAD 0x20
+#define size (height*width)
+#define EXTENSION ".life"
+#define SWAP (bool*) ((int)previous ^ (int)current);
 
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
 void updateLife();
 void printLife();
 
-int height, width, size;	// to store the number of heights and the number of widthums of the screen
+int height, width;	// to store the number of heights and the number of widthums of the screen
 bool *current, *previous;
 
 int main(int argc, char **argv)
@@ -31,9 +34,7 @@ int main(int argc, char **argv)
 	attron(COLOR_PAIR(1));					// Set pair
 		
 	curs_set(0);							// Disable the cursor
-	
-	size = height*width;
-	
+		
 	current = calloc(size, sizeof(bool));
 	previous = calloc(size, sizeof(bool));
 	
@@ -47,9 +48,9 @@ int main(int argc, char **argv)
 	
 	if(loadDemo)
 	{		
-		char *filename = calloc( strlen(argv[0]) + strlen(".life") + 1, 1);
+		char *filename = calloc( strlen(argv[0]) + strlen(EXTENSION) + 1, 1);
 		memcpy(filename, argv[0], strlen(argv[0]));
-		memcpy(filename+strlen(argv[0]), ".life", strlen(".life"));
+		memcpy(filename+strlen(argv[0]), EXTENSION, strlen(EXTENSION));
 		readFile(filename);
 	}
 	
@@ -60,9 +61,9 @@ int main(int argc, char **argv)
 	
 	while(true)
 	{
-		previous = (bool*) ((int)previous ^ (int)current);	// Swap buffer
-		current = (bool*) ((int)previous ^ (int)current);
-		previous = (bool*) ((int)previous ^ (int)current);
+		previous = SWAP
+		current  = SWAP
+		previous = SWAP
 		
 		updateLife();
 		printLife();
