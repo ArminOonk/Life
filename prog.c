@@ -127,15 +127,7 @@ void updateLife()
 		for(int x=0; x<width; x++)
 		{
 			int index = getIndex(x,y);
-			if(previous[index])
-			{
-				//Are we going to die?
-				dies(x, y) ? (current[index] = false) : (current[index] = true);
-			}
-			else
-			{
-				born(x, y) ? (current[index] = true) : (current[index] = false);
-			}
+			previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
 		}
 	}
 }
