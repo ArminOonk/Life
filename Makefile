@@ -1,5 +1,5 @@
 #!/usr/bin/env make
-CC= gcc
+CC= cc
 CWARN= -Wall -pedantic
 CSTD= -std=c99
 OPT= -O2
@@ -17,3 +17,7 @@ ${ENTRY}: ${ENTRY}.c
 	
 prog: prog.c
 	${CC} $< -o $@ ${CFLAGS}
+	
+clean:
+	rm -f *.o life prog
+	echo Clean done

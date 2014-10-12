@@ -127,7 +127,7 @@ void updateLife(int x, int y)
 	x++;
 	
 	(x >= width) ? (x = 0,	y++) : 0;
-	(y < height+1) ?  updateLife(x, y) : 0;
+	(y < height+1) ?  (updateLife(x, y), x=x) : 0;
 }
 
 void printLife()
