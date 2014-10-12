@@ -56,7 +56,7 @@ int sIS(char *c)
 	r0
 }
 
-int getNrED(int x, int y)
+int gnd(int x, int y)
 {
 	int nrED;
 	(p[gi(x, y)]) ? (nrED=-1) : (nrED=0);
@@ -79,7 +79,7 @@ int getNrED(int x, int y)
 
 int ul(int x, int y)
 {
-	p[gi(x,y)] ? ((!(((unsigned int)getNrED(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((getNrED(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[gi(x,y)] ? ((!(((unsigned int)gnd(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((gnd(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
