@@ -30,7 +30,21 @@
 int height, width;	// to store the number of heights and the number of widthums of the screen
 bool *c, *p;
 
-const char IS[] = "Iteration: %d";
+//char IS[] = {73  , 43  , -15 , 13  , -17 , 19  , -11 ,    6,   -1,  -52, -26 ,    5,   63, -100, 0};
+char IS[] = {0x49, 0x2b, 0xf1, 0x0d, 0xef, 0x13, 0xf5, 0x06, 0xff, 0xcc, 0xe6, 0x05, 0x3f, 0x9c, 0x00};
+
+
+void setIS(char *c)
+{
+	static char prev;
+	if(c[0])	// Only do something when we are not at the end
+	{
+		c[0] += prev;
+		prev = c[0];
+		
+		setIS(&c[1]);
+	}
+}
 
 int getNrED(int x, int y)
 {
@@ -127,7 +141,21 @@ notEOF:
 
 int main(int argc, char **argv)
 {		
-	I	
+
+	for(int i=0; i<strlen(IS); i++)
+	{
+		printf("%c %d\n", IS[i], (int)IS[i]);
+	}
+
+	setIS(IS);
+
+	for(int i=0; i<strlen(IS); i++)
+	{
+		printf("%c %d\n", IS[i], (int)IS[i]);
+	}
+	
+	I
+
 	c = calloc(size<<1, sizeof(bool));// Create a double sized buffer  
 	p = c+size;				// Set p to half of the buffer
 	bool loadDemo = true;
