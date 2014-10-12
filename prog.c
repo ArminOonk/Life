@@ -11,8 +11,10 @@
 #define dies(x,y) (!(((unsigned int)getNrED(x, y)-2)<2))
 
 #define size (height*width)
-#define EXT ".life"
-#define EL strlen(EXT)
+
+unsigned int EXT[] = {0xfdfd3e2e, 0xff};
+#define SEXT (char*)EXT
+#define EL strlen(SEXT)
 
 #define P argv[0]
 
@@ -30,9 +32,8 @@
 int height, width;	// to store the number of heights and the number of widthums of the screen
 bool *c, *p;
 
-//char IS[] = {73  , 43  , -15 , 13  , -17 , 19  , -11 ,    6,   -1,  -52, -26 ,    5,   63, -100, 0};
-//char IS[] = {0x49, 0x2b, 0xf1, 0x0d, 0xef, 0x13, 0xf5, 0x06, 0xff, 0xcc, 0xe6, 0x05, 0x3f, 0x9c, 0x00};
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f};
+#define SIS (char *)IS
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f}; // Game constants
 
 void setIS(char *c)
 {
@@ -86,7 +87,7 @@ void printLife(int i)
 	if (i >= size)
 	{
 		static int iteration;
-		mvprintw(0,0, (char*)IS, iteration++);
+		mvprintw(0,0, SIS, iteration++);
 		refresh();
 	}
 	else
@@ -141,7 +142,8 @@ notEOF:
 
 int main(int argc, char **argv)
 {		
-	setIS((char *)IS);
+	setIS(SIS);
+	setIS(SEXT);
 	
 	I
 
