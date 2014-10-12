@@ -32,10 +32,13 @@
 #define MC memcpy((char*)argc
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
-int h, w;	// to store the number of hs and the number of wums of the screen
+//int h, w;	// to store the number of hs and the number of wums of the screen
+#define h IS[11]
+#define w IS[12]
+
 bool *c, *p;
 
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff, 0x21, 0x71, 0x2e, 0x0a, 0x20}; // Game constants
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff, 0x21, 0x71, 0x2e, 0x0a, 0x20, 0x00, 0x00}; // Game constants
 
 void sIS(char *c)
 {
