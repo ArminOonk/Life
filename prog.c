@@ -11,7 +11,7 @@
 #define dies(x,y) (!(((unsigned int)getNrAlive(x, y)-2)<2))
 
 #define size (height*width)
-#define EXTENSION ".life"
+#define EXT ".life"
 
 #define SWAP previous = (bool*)((int)previous ^ (int)current); current = (bool*)((int)previous ^ (int)current); previous = (bool*)((int)previous ^ (int)current);
 #define COMMENT 0x21
@@ -20,6 +20,8 @@
 #define ALIVE 0x0a
 #define DEAD 0x20
 
+#define MC memcpy((char*)argc
+
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
 void updateLife(int x, int y);
@@ -27,6 +29,8 @@ void printLife();
 
 int height, width;	// to store the number of heights and the number of widthums of the screen
 bool *current, *previous;
+
+const char itString[] = "Iteration: %d";
 
 int main(int argc, char **argv)
 {		
@@ -50,13 +54,7 @@ int main(int argc, char **argv)
 		loadDemo = !readFile(argv[1]);
 	}
 	
-	if(loadDemo)
-	{		
-		argc = (int)calloc( strlen(argv[0]) + strlen(EXTENSION) + 1, 1);
-		memcpy((char*)argc, argv[0], strlen(argv[0]));
-		memcpy((char*)argc+strlen(argv[0]), EXTENSION, strlen(EXTENSION));
-		readFile((char*)argc);
-	}
+	loadDemo ? (argc = (int)calloc( strlen(argv[0]) + strlen(EXT) + 1, 1), MC, argv[0], strlen(argv[0])), MC+strlen(argv[0]), EXT, strlen(EXT)), readFile((char*)argc)) : 0;
 	
 	printLife();
 	
@@ -134,7 +132,7 @@ void printLife()
 		i[current] ? addch(DEAD|ALIVE) : addch(DEAD);
 	}
 	static int iteration;
-	mvprintw(0,0,"Iteration: %d", iteration++);
+	mvprintw(0,0, itString, iteration++);
 	refresh();
 }
 
