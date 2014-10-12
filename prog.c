@@ -28,7 +28,7 @@
 int getNrAlive(int x, int y);
 bool readFile(char *filename);
 void updateLife(int x, int y);
-void printLife();
+void printLife(int i);
 
 int height, width;	// to store the number of heights and the number of widthums of the screen
 bool *current, *previous;
@@ -55,14 +55,14 @@ int main(int argc, char **argv)
 	(argc > 1) ? (loadDemo = !readFile(argv[1])):0;
 	loadDemo ? (argc = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), readFile((char*)argc)) : 0;
 	
-	printLife();
+	printLife(0);
 	
 	while(getch() == ERR);// Wait for user to press a button
 	
 again:
 	SWAP
 	updateLife(0,0);
-	printLife();
+	printLife(0);
 	
 	argc = getch();
 	if(argc == STOP || argc == (STOP-0x20))
@@ -74,20 +74,17 @@ stop:
 
 int getNrAlive(int x, int y)
 {
-	int nrAlive = 0;
+	int nrAlive;
+	(previous[getIndex(x, y)]) ? (nrAlive=-1) : (nrAlive=0);
+	
 	for(int dy=(y-1); dy<= (y+1); dy++)
 	{
 		for(int dx=(x-1); dx<=(x+1); dx++)
-		{
-			if(dx == x && dy == y)
-			{
-				continue;
-			}
-			
+		{			
 			int xt = dx;
 			int yt = dy;
 
-			(xt < 0) ? (xt = width-1) : ((xt >= width) ? (xt = 0) : 0);
+			(xt < 0) ? (xt = width -1) : ((xt >= width ) ? (xt = 0) : 0);
 			(yt < 0) ? (yt = height-1) : ((yt >= height) ? (yt = 0) : 0);
 
 			previous[getIndex(xt, yt)] ? nrAlive++:0;
@@ -105,16 +102,24 @@ void updateLife(int x, int y)
 	(y < height+1) ?  (updateLife(x, y), x=x) : 0;
 }
 
-void printLife()
+void printLife(int i)
 {
-	move(0,0);
-	for(int i=0; i<size; i++)
+	if(i == 0)
+	{
+		move(0,0);
+	}
+	
+	if (i >= size)
+	{
+		static int iteration;
+		mvprintw(0,0, itString, iteration++);
+		refresh();
+	}
+	else
 	{
 		i[current] ? addch(DEAD|ALIVE) : addch(DEAD);
+		printLife(i+1);
 	}
-	static int iteration;
-	mvprintw(0,0, itString, iteration++);
-	refresh();
 }
 
 bool readFile(char *filename)
