@@ -12,6 +12,9 @@
 
 #define size (height*width)
 #define EXT ".life"
+#define EL strlen(EXT)
+
+#define P argv[0]
 
 #define SWAP previous = (bool*)((int)previous ^ (int)current); current = (bool*)((int)previous ^ (int)current); previous = (bool*)((int)previous ^ (int)current);
 #define COMMENT 0x21
@@ -49,12 +52,8 @@ int main(int argc, char **argv)
 	bool loadDemo = true;
 	
 	// Initial board
-	if(argc > 1)
-	{
-		loadDemo = !readFile(argv[1]);
-	}
-	
-	loadDemo ? (argc = (int)calloc( strlen(argv[0]) + strlen(EXT) + 1, 1), MC, argv[0], strlen(argv[0])), MC+strlen(argv[0]), EXT, strlen(EXT)), readFile((char*)argc)) : 0;
+	(argc > 1) ? (loadDemo = !readFile(argv[1])):0;
+	loadDemo ? (argc = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), readFile((char*)argc)) : 0;
 	
 	printLife();
 	
@@ -88,28 +87,10 @@ int getNrAlive(int x, int y)
 			int xt = dx;
 			int yt = dy;
 
-			if(xt < 0)
-			{
-				xt = width-1;
-			}
-			else if(xt >= width)
-			{
-				xt = 0;
-			}
+			(xt < 0) ? (xt = width-1) : ((xt >= width) ? (xt = 0) : 0);
+			(yt < 0) ? (yt = height-1) : ((yt >= height) ? (yt = 0) : 0);
 
-			if(yt < 0)
-			{
-				yt = height-1;
-			}
-			else if(yt >= height)
-			{
-				yt = 0;
-			}
-
-			if(previous[getIndex(xt, yt)])
-			{
-				nrAlive++;
-			}
+			previous[getIndex(xt, yt)] ? nrAlive++:0;
 		}
 	}
 	return nrAlive;
