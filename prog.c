@@ -32,18 +32,19 @@
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
 bool *c, *p;
-//                   |Iteration               End of Iteration|  | .life         | IS[6]     |
+//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
 unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
 
 void sIS(char *c)
 {
-	static char prev;
+	char prev = 0;
+	sIS:
 	if(c[0])	// Only do something when we are not at the end
 	{
 		c[0] += prev;
 		prev = c[0];
-		
-		sIS(&c[1]);
+		c++;
+		goto sIS;
 	}
 }
 
