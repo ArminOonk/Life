@@ -6,9 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-
-
-#define getIndex(x,y) (y*w + x)
+#define gi(x,y) (y*w + x)
 #define born(x,y) (getNrED(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrED(x, y)-2)<2))
 
@@ -22,13 +20,6 @@
 #define P argv[0]
 
 #define S p = (bool*)((int)p ^ (int)c); c = (bool*)((int)p ^ (int)c); p = (bool*)((int)p ^ (int)c);
-/*#define COMMENT IS[6]
-#define STOP  IS[7]
-#define EMPTY IS[8]
-#define ED IS[9]
-#define DEAD IS[10]
-#define h IS[11]
-#define w IS[12]*/
 
 #define COMMENT ((IS[6]&0xff))
 #define STOP  	((IS[6]>>8)&0xff)
@@ -44,8 +35,8 @@
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
 bool *c, *p;
-//                   |Iteration               End of Iteration|  | .life        | IS[6]|
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121/*0x21, 0x71, 0x2e, 0x0a,*/, 0x20, 0x00, 0x00}; // Game constants
+//                   |Iteration               End of Iteration|  | .life         | IS[6]     |
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
 
 void sIS(char *c)
 {
@@ -62,7 +53,7 @@ void sIS(char *c)
 int getNrED(int x, int y)
 {
 	int nrED;
-	(p[getIndex(x, y)]) ? (nrED=-1) : (nrED=0);
+	(p[gi(x, y)]) ? (nrED=-1) : (nrED=0);
 	
 	for(int dy=(y-1); dy<= (y+1); dy++)
 	{
@@ -74,7 +65,7 @@ int getNrED(int x, int y)
 			(xt < 0) ? (xt = w -1) : ((xt >= w ) ? (xt = 0) : 0);
 			(yt < 0) ? (yt = h-1) : ((yt >= h) ? (yt = 0) : 0);
 
-			p[getIndex(xt, yt)] ? nrED++:0;
+			p[gi(xt, yt)] ? nrED++:0;
 		}
 	}
 	return nrED;
@@ -82,7 +73,7 @@ int getNrED(int x, int y)
 
 void updateLife(int x, int y)
 {
-	p[getIndex(x,y)] ? (dies(x, y) ? (c[getIndex(x,y)] = false) : (c[getIndex(x,y)] = true)) : (born(x, y) ? (c[getIndex(x,y)] = true) : (c[getIndex(x,y)] = false));
+	p[gi(x,y)] ? (dies(x, y) ? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : (born(x, y) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
@@ -137,7 +128,7 @@ notEOF:
 		}
 		
 		startOfLine ? (startOfLine = false, (ch == COMMENT) ? skipLine = true : 0) : 0;
-		(ch == '\n') ? (y++, x=0, startOfLine = true, skipLine = false) : ((!skipLine)?	(c[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
+		(ch == '\n') ? (y++, x=0, startOfLine = true, skipLine = false) : ((!skipLine)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
 		(x >= w) ? (x = 0, y++) : 0;
 		
 		if(y >= h)
@@ -153,7 +144,7 @@ notEOF:
 }
 
 int main(int argc, char **argv)
-{			
+{		
 	I
 
 	c = calloc(size<<1, sizeof(bool));// Create a double sized buffer  
