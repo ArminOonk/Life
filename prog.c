@@ -12,8 +12,8 @@
 
 #define size (height*width)
 #define EXTENSION ".life"
-#define SWAP (bool*) ((int)previous ^ (int)current);
 
+#define SWAP previous = (bool*)((int)previous ^ (int)current); current = (bool*)((int)previous ^ (int)current); previous = (bool*)((int)previous ^ (int)current);
 #define COMMENT 0x21
 #define STOP 0x71 
 #define EMPTY 0x2e
@@ -63,10 +63,7 @@ int main(int argc, char **argv)
 	while(getch() == ERR);// Wait for user to press a button
 	
 again:
-	previous = SWAP
-	current  = SWAP
-	previous = SWAP
-	
+	SWAP
 	updateLife(0,0);
 	printLife();
 	
@@ -122,8 +119,7 @@ int getNrAlive(int x, int y)
 
 void updateLife(int x, int y)
 {
-	int index = getIndex(x,y);
-	previous[index] ? (dies(x, y) ? (current[index] = false) : (current[index] = true)) : (born(x, y) ? (current[index] = true) : (current[index] = false));
+	previous[getIndex(x,y)] ? (dies(x, y) ? (current[getIndex(x,y)] = false) : (current[getIndex(x,y)] = true)) : (born(x, y) ? (current[getIndex(x,y)] = true) : (current[getIndex(x,y)] = false));
 	x++;
 	
 	(x >= width) ? (x = 0,	y++) : 0;
@@ -169,14 +165,7 @@ notEOF:
 			goto done;
 		}
 		
-		if(startOfLine)
-		{
-			startOfLine = false;
-			if(ch == COMMENT)
-			{
-				skipLine = true;
-			}
-		}
+		startOfLine ? (startOfLine = false, (ch == COMMENT) ? skipLine = true : 0) : 0;
 		
 		if(ch == '\n')
 		{
