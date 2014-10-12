@@ -14,7 +14,7 @@
 #define EXT &IS[4]
 #define SIS (char *)IS
 
-#define P argv[0]
+#define P V[0]
 
 #define S p = (bool*)((int)p ^ (int)c); c = (bool*)((int)p ^ (int)c); p = (bool*)((int)p ^ (int)c);
 
@@ -28,10 +28,13 @@
 #define w IS[9]
 
 #define D addch(DEAD
-#define MC memcpy((char*)argc
+#define MC memcpy((char*)a
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
 #define r0 return(0);
+
+#define O foo[v--](0,0);
+#define bar(x) foo[x]();
 
 bool *c, *p;
 //                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
@@ -81,7 +84,7 @@ int ul(int x, int y)
 	r0
 }
 
-int pl(int i)
+int pl(int i, int j)
 {
 	if(i == 0)
 	{
@@ -97,12 +100,12 @@ int pl(int i)
 	else
 	{
 		i[c] ? D|ED) : D);
-		pl(i+1);
+		pl(i+1, 2);
 	}
 	r0
 }
 
-bool readFile(char *filename)
+bool rf(char *filename)
 {
 	bool retVal = false;
 	FILE *readFP = fopen(filename, "r");
@@ -147,7 +150,7 @@ notEOF:
 
 int (*foo[])() = {getch, pl, ul, endwin};
 
-int main(int argc, char **argv)
+int main(int a, char **V)
 {		
 	I
 
@@ -156,8 +159,8 @@ int main(int argc, char **argv)
 	bool loadDemo = true;
 	
 	// Initial board
-	(argc > 1) ? (loadDemo = !readFile(argv[1])):0;
-	loadDemo ? (argc = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), readFile((char*)argc)) : 0;
+	(a > 1) ? (loadDemo = !rf(V[1])):0;
+	loadDemo ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : 0;
 	
 	foo[1](0);
 	
@@ -165,11 +168,12 @@ int main(int argc, char **argv)
 	
 again:
 	S
-	foo[2](0,0);
-	foo[1](0);
+	int v=2;
+	O
+	O
+	a = bar(0);
 	
-	argc = foo[0]();
-	if(argc == STOP || argc == (STOP-0x20))
+	if(a == STOP || a == (STOP-0x20))
 		goto stop;
 	goto again;
 stop:	
