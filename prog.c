@@ -166,29 +166,12 @@ notEOF:
 		}
 		
 		startOfLine ? (startOfLine = false, (ch == COMMENT) ? skipLine = true : 0) : 0;
-		
-		if(ch == '\n')
-		{
-			y++;
-			x=0;
-			startOfLine = true;
-			skipLine = false;
-		}
-		else if(!skipLine)
-		{
-			current[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY); // Make it alive when not space
-			x++;
-		}
-		
-		if(x >= width)
-		{
-			x = 0;
-			y++;
-		}
+		(ch == '\n') ? (y++, x=0, startOfLine = true, skipLine = false) : ((!skipLine)?	(current[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
+		(x >= width) ? (x = 0, y++) : 0;
 		
 		if(y >= height)
 		{
-			goto notEOF;
+			goto done;
 		}
 		goto notEOF;
 	}	
