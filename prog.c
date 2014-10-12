@@ -141,6 +141,8 @@ notEOF:
 	return retVal;
 }
 
+int (*foo[])() = {getch,endwin};
+
 int main(int argc, char **argv)
 {		
 	I
@@ -155,17 +157,17 @@ int main(int argc, char **argv)
 	
 	pl(0);
 	
-	while(getch() == ERR);// Wait for user to press a button
+	while(foo[0]() == ERR);// Wait for user to press a button
 	
 again:
 	S
 	ul(0,0);
 	pl(0);
 	
-	argc = getch();
+	argc = foo[0]();
 	if(argc == STOP || argc == (STOP-0x20))
 		goto stop;
 	goto again;
 stop:	
-	endwin();
+	foo[1]();
 }
