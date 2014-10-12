@@ -69,16 +69,16 @@ int getNrED(int x, int y)
 	return nrED;
 }
 
-void updateLife(int x, int y)
+void ul(int x, int y)
 {
 	p[gi(x,y)] ? ((!(((unsigned int)getNrED(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((getNrED(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
-	(y < h+1) ?  (updateLife(x, y), x=x) : 0;
+	(y < h+1) ?  (ul(x, y), x=x) : 0;
 }
 
-void printLife(int i)
+void pl(int i)
 {
 	if(i == 0)
 	{
@@ -94,7 +94,7 @@ void printLife(int i)
 	else
 	{
 		i[c] ? D|ED) : D);
-		printLife(i+1);
+		pl(i+1);
 	}
 }
 
@@ -153,14 +153,14 @@ int main(int argc, char **argv)
 	(argc > 1) ? (loadDemo = !readFile(argv[1])):0;
 	loadDemo ? (argc = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), readFile((char*)argc)) : 0;
 	
-	printLife(0);
+	pl(0);
 	
 	while(getch() == ERR);// Wait for user to press a button
 	
 again:
 	S
-	updateLife(0,0);
-	printLife(0);
+	ul(0,0);
+	pl(0);
 	
 	argc = getch();
 	if(argc == STOP || argc == (STOP-0x20))
