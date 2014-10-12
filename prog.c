@@ -22,23 +22,30 @@
 #define P argv[0]
 
 #define S p = (bool*)((int)p ^ (int)c); c = (bool*)((int)p ^ (int)c); p = (bool*)((int)p ^ (int)c);
-#define COMMENT IS[6]
+/*#define COMMENT IS[6]
 #define STOP  IS[7]
 #define EMPTY IS[8]
 #define ED IS[9]
 #define DEAD IS[10]
+#define h IS[11]
+#define w IS[12]*/
+
+#define COMMENT ((IS[6]&0xff))
+#define STOP  	((IS[6]>>8)&0xff)
+#define EMPTY 	((IS[6]>>16)&0xff)
+#define ED 		((IS[6]>>24)&0xff)
+
+#define DEAD IS[7]
+#define h IS[8]
+#define w IS[9]
 
 #define D addch(DEAD
 #define MC memcpy((char*)argc
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
-//int h, w;	// to store the number of hs and the number of wums of the screen
-#define h IS[11]
-#define w IS[12]
-
 bool *c, *p;
-
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff, 0x21, 0x71, 0x2e, 0x0a, 0x20, 0x00, 0x00}; // Game constants
+//                   |Iteration               End of Iteration|  | .life        | IS[6]|
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121/*0x21, 0x71, 0x2e, 0x0a,*/, 0x20, 0x00, 0x00}; // Game constants
 
 void sIS(char *c)
 {
