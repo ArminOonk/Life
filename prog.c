@@ -6,15 +6,18 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define getIndex(x,y) (y*width + x)
+
+
+#define getIndex(x,y) (y*w + x)
 #define born(x,y) (getNrED(x, y) == 3)
 #define dies(x,y) (!(((unsigned int)getNrED(x, y)-2)<2))
 
-#define size (height*width)
+#define size (h*w)
 
-unsigned int EXT[] = {0xfdfd3e2e, 0xff};
 #define SEXT (char*)EXT
 #define EL strlen(SEXT)
+#define EXT &IS[4]
+#define SIS (char *)IS
 
 #define P argv[0]
 
@@ -27,15 +30,14 @@ unsigned int EXT[] = {0xfdfd3e2e, 0xff};
 
 #define D addch(DEAD
 #define MC memcpy((char*)argc
-#define I initscr();getmaxyx(stdscr,height,width);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
+#define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
-int height, width;	// to store the number of heights and the number of widthums of the screen
+int h, w;	// to store the number of hs and the number of wums of the screen
 bool *c, *p;
 
-#define SIS (char *)IS
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f}; // Game constants
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff}; // Game constants
 
-void setIS(char *c)
+void sIS(char *c)
 {
 	static char prev;
 	if(c[0])	// Only do something when we are not at the end
@@ -43,7 +45,7 @@ void setIS(char *c)
 		c[0] += prev;
 		prev = c[0];
 		
-		setIS(&c[1]);
+		sIS(&c[1]);
 	}
 }
 
@@ -59,8 +61,8 @@ int getNrED(int x, int y)
 			int xt = dx;
 			int yt = dy;
 
-			(xt < 0) ? (xt = width -1) : ((xt >= width ) ? (xt = 0) : 0);
-			(yt < 0) ? (yt = height-1) : ((yt >= height) ? (yt = 0) : 0);
+			(xt < 0) ? (xt = w -1) : ((xt >= w ) ? (xt = 0) : 0);
+			(yt < 0) ? (yt = h-1) : ((yt >= h) ? (yt = 0) : 0);
 
 			p[getIndex(xt, yt)] ? nrED++:0;
 		}
@@ -73,8 +75,8 @@ void updateLife(int x, int y)
 	p[getIndex(x,y)] ? (dies(x, y) ? (c[getIndex(x,y)] = false) : (c[getIndex(x,y)] = true)) : (born(x, y) ? (c[getIndex(x,y)] = true) : (c[getIndex(x,y)] = false));
 	x++;
 	
-	(x >= width) ? (x = 0,	y++) : 0;
-	(y < height+1) ?  (updateLife(x, y), x=x) : 0;
+	(x >= w) ? (x = 0,	y++) : 0;
+	(y < h+1) ?  (updateLife(x, y), x=x) : 0;
 }
 
 void printLife(int i)
@@ -126,9 +128,9 @@ notEOF:
 		
 		startOfLine ? (startOfLine = false, (ch == COMMENT) ? skipLine = true : 0) : 0;
 		(ch == '\n') ? (y++, x=0, startOfLine = true, skipLine = false) : ((!skipLine)?	(c[getIndex(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
-		(x >= width) ? (x = 0, y++) : 0;
+		(x >= w) ? (x = 0, y++) : 0;
 		
-		if(y >= height)
+		if(y >= h)
 		{
 			goto done;
 		}
@@ -141,10 +143,7 @@ notEOF:
 }
 
 int main(int argc, char **argv)
-{		
-	setIS(SIS);
-	setIS(SEXT);
-	
+{			
 	I
 
 	c = calloc(size<<1, sizeof(bool));// Create a double sized buffer  
