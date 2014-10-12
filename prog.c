@@ -7,9 +7,6 @@
 #include <ctype.h>
 
 #define gi(x,y) (y*w + x)
-#define born(x,y) (getNrED(x, y) == 3)
-#define dies(x,y) (!(((unsigned int)getNrED(x, y)-2)<2))
-
 #define size (h*w)
 
 #define SEXT (char*)EXT
@@ -73,7 +70,7 @@ int getNrED(int x, int y)
 
 void updateLife(int x, int y)
 {
-	p[gi(x,y)] ? (dies(x, y) ? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : (born(x, y) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[gi(x,y)] ? ((!(((unsigned int)getNrED(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((getNrED(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
