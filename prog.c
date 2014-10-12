@@ -16,7 +16,8 @@
 
 #define P V[0]
 
-#define S p = (bool*)((int)p ^ (int)c); c = (bool*)((int)p ^ (int)c); p = (bool*)((int)p ^ (int)c);
+#define SX (b*)((int)p ^ (int)c)
+#define S p = SX; c = SX; p = SX;
 
 #define COMMENT ((IS[6]&0xff))
 #define STOP  	((IS[6]>>8)&0xff)
@@ -29,18 +30,19 @@
 
 #define D addch(DEAD
 #define MC memcpy((char*)a
-#define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
+#define I foo[4](SIS);foo[4](SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
 #define r0 return(0);
 
 #define O foo[v--](0,0);
 #define bar(x) foo[x]();
+#define b bool
 
-bool *c, *p;
+b *c, *p;
 //                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
 unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
 
-void sIS(char *c)
+int sIS(char *c)
 {
 	char prev = 0;
 	sIS:
@@ -51,6 +53,7 @@ void sIS(char *c)
 		c++;
 		goto sIS;
 	}
+	r0
 }
 
 int getNrED(int x, int y)
@@ -105,17 +108,17 @@ int pl(int i, int j)
 	r0
 }
 
-bool rf(char *filename)
+b rf(char *filename)
 {
-	bool retVal = false;
+	b retVal = false;
 	FILE *readFP = fopen(filename, "r");
 	if(readFP == NULL)
 	{
 		return false;
 	}
 	
-	bool startOfLine = true;
-	bool skipLine = false;
+	b sol = true;
+	b sl = false;
 	
 	if ( readFP != NULL )
 	{
@@ -132,8 +135,8 @@ notEOF:
 			goto done;
 		}
 		
-		startOfLine ? (startOfLine = false, (ch == COMMENT) ? skipLine = true : 0) : 0;
-		(ch == '\n') ? (y++, x=0, startOfLine = true, skipLine = false) : ((!skipLine)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
+		sol ? (sol = false, (ch == COMMENT) ? sl = true : 0) : 0;
+		(ch == '\n') ? (y++, x=0, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
 		(x >= w) ? (x = 0, y++) : 0;
 		
 		if(y >= h)
@@ -148,19 +151,19 @@ notEOF:
 	return retVal;
 }
 
-int (*foo[])() = {getch, pl, ul, endwin};
+int (*foo[])() = {getch, pl, ul, endwin, sIS};
 
 int main(int a, char **V)
 {		
 	I
 
-	c = calloc(size<<1, sizeof(bool));// Create a double sized buffer  
+	c = calloc(size<<1, sizeof(b));// Create a double sized buffer  
 	p = c+size;				// Set p to half of the buffer
-	bool loadDemo = true;
+	b ld = true;
 	
 	// Initial board
-	(a > 1) ? (loadDemo = !rf(V[1])):0;
-	loadDemo ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : 0;
+	(a > 1) ? (ld = !rf(V[1])):0;
+	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : 0;
 	
 	foo[1](0);
 	
