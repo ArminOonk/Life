@@ -31,8 +31,8 @@ int height, width;	// to store the number of heights and the number of widthums 
 bool *c, *p;
 
 //char IS[] = {73  , 43  , -15 , 13  , -17 , 19  , -11 ,    6,   -1,  -52, -26 ,    5,   63, -100, 0};
-char IS[] = {0x49, 0x2b, 0xf1, 0x0d, 0xef, 0x13, 0xf5, 0x06, 0xff, 0xcc, 0xe6, 0x05, 0x3f, 0x9c, 0x00};
-
+//char IS[] = {0x49, 0x2b, 0xf1, 0x0d, 0xef, 0x13, 0xf5, 0x06, 0xff, 0xcc, 0xe6, 0x05, 0x3f, 0x9c, 0x00};
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f};
 
 void setIS(char *c)
 {
@@ -86,7 +86,7 @@ void printLife(int i)
 	if (i >= size)
 	{
 		static int iteration;
-		mvprintw(0,0, IS, iteration++);
+		mvprintw(0,0, (char*)IS, iteration++);
 		refresh();
 	}
 	else
@@ -141,18 +141,7 @@ notEOF:
 
 int main(int argc, char **argv)
 {		
-
-	for(int i=0; i<strlen(IS); i++)
-	{
-		printf("%c %d\n", IS[i], (int)IS[i]);
-	}
-
-	setIS(IS);
-
-	for(int i=0; i<strlen(IS); i++)
-	{
-		printf("%c %d\n", IS[i], (int)IS[i]);
-	}
+	setIS((char *)IS);
 	
 	I
 
