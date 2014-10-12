@@ -22,11 +22,11 @@
 #define P argv[0]
 
 #define S p = (bool*)((int)p ^ (int)c); c = (bool*)((int)p ^ (int)c); p = (bool*)((int)p ^ (int)c);
-#define COMMENT 0x21
-#define STOP 0x71 
-#define EMPTY 0x2e
-#define ED 0x0a
-#define DEAD 0x20
+#define COMMENT IS[6]
+#define STOP  IS[7]
+#define EMPTY IS[8]
+#define ED IS[9]
+#define DEAD IS[10]
 
 #define D addch(DEAD
 #define MC memcpy((char*)argc
@@ -35,7 +35,7 @@
 int h, w;	// to store the number of hs and the number of wums of the screen
 bool *c, *p;
 
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff}; // Game constants
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x00009c3f, 0xfdfd3e2e, 0xff, 0x21, 0x71, 0x2e, 0x0a, 0x20}; // Game constants
 
 void sIS(char *c)
 {
