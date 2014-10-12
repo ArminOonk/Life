@@ -31,6 +31,8 @@
 #define MC memcpy((char*)argc
 #define I sIS(SIS);sIS(SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 
+#define r0 return(0);
+
 bool *c, *p;
 //                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
 unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
@@ -69,16 +71,17 @@ int getNrED(int x, int y)
 	return nrED;
 }
 
-void ul(int x, int y)
+int ul(int x, int y)
 {
 	p[gi(x,y)] ? ((!(((unsigned int)getNrED(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((getNrED(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
 	(y < h+1) ?  (ul(x, y), x=x) : 0;
+	r0
 }
 
-void pl(int i)
+int pl(int i)
 {
 	if(i == 0)
 	{
@@ -96,6 +99,7 @@ void pl(int i)
 		i[c] ? D|ED) : D);
 		pl(i+1);
 	}
+	r0
 }
 
 bool readFile(char *filename)
@@ -141,7 +145,7 @@ notEOF:
 	return retVal;
 }
 
-int (*foo[])() = {getch,endwin};
+int (*foo[])() = {getch, pl, ul, endwin};
 
 int main(int argc, char **argv)
 {		
@@ -155,19 +159,19 @@ int main(int argc, char **argv)
 	(argc > 1) ? (loadDemo = !readFile(argv[1])):0;
 	loadDemo ? (argc = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), readFile((char*)argc)) : 0;
 	
-	pl(0);
+	foo[1](0);
 	
 	while(foo[0]() == ERR);// Wait for user to press a button
 	
 again:
 	S
-	ul(0,0);
-	pl(0);
+	foo[2](0,0);
+	foo[1](0);
 	
 	argc = foo[0]();
 	if(argc == STOP || argc == (STOP-0x20))
 		goto stop;
 	goto again;
 stop:	
-	foo[1]();
+	foo[3]();
 }
