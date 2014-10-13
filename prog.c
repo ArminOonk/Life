@@ -6,33 +6,34 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define B (char *)IS
-#define C ((IS[6]&0xff))
-#define D addch(DEAD
-#define DEAD IS[7]
+#define B 		(char *)IS
+#define C 		((IS[6]&0xff))
+#define D 		addch(DEAD
+#define DEAD 	IS[7]
 #define E 		strlen(T)
 #define ED 		((IS[6]>>24)&0xff)
-#define F  	((IS[6]>>8)&0xff)
-#define I foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
-#define M memcpy((char*)a
-#define O foo[v--](0,0);
-#define P V[0]
-#define S p = Y; c = Y; p = Y;
-#define Y (b*)((int)p ^ (int)c)
-#define T (char*)X
-#define X 	&IS[4]
+#define F  		((IS[6]>>8)&0xff)
+#define I 		foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
+#define M 		memcpy((char*)a
+#define O 		foo[v--](0,0);
+#define P 		V[0]
+#define S 		p = Y; c = Y; p = Y;
+#define Y 		(b*)((int)p ^ (int)c)
+#define T 		(char*)X
+#define X 		&IS[4]
 
-#define a(x,y) (y*w + x)
-#define b bool
-#define d(x) foo[x]();
-#define g (unsigned)foo[5](x, y)
-#define h IS[8]
-#define i 1
-#define o 0
-#define oo :o
-#define r return(0);
-#define s (h*w)
-#define w IS[9]
+#define a(x,y) 	(y*w + x)
+#define b 		bool
+#define d(x) 	foo[x]();
+#define g 		(unsigned)foo[5](x, y)
+#define h 		IS[8]
+#define i 		1
+#define o 		0
+#define oo 		:o
+#define r 		return(0);
+#define s 		(h*w)
+#define t 		true
+#define w 		IS[9]
 
 int (*foo[10])();
 b *c, *p;
@@ -75,7 +76,7 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = false) : (c[a(x,y)] = true)) : ((g == IS[10]) ? (c[a(x,y)] = true) : (c[a(x,y)] = false));
+	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == IS[10]) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
@@ -106,36 +107,36 @@ int pl(int q, int j)
 
 b rf(char *filename)
 {
-	b retVal = false;
-	FILE *readFP = fopen(filename, "r");
-	if(readFP == NULL)
+	b retVal = !t;
+	FILE *f = fopen(filename, "r");
+	if(f == NULL)
 	{
-		return false;
+		return !t;
 	}
 	
-	b sol = true;
-	b sl = false;
+	b il = t;
+	b li = !t;
 	
-	if ( readFP != NULL )
+	if ( f != NULL )
 	{
-		retVal = true;
+		retVal = t;
 
 		int x = o;
 		int y = o;
 		int ch;
 notEOF:
-		ch = fgetc( readFP );
+		ch = fgetc( f );
 		
 		if(ch == EOF)goto done;
 		
-		sol ? (sol = false, (ch == C) ? sl = true oo) oo;
-		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[a(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
+		il ? (il = !t, (ch == C) ? li = t oo) oo;
+		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
 	}	
 	done:
-	fclose(readFP);
+	fclose(f);
 	
 	return retVal;
 }
@@ -153,7 +154,7 @@ int main(int a, char **V)
 
 	c = calloc(s<<i, sizeof(b));// Create a double sized buffer  
 	p = c+s;				// Set p to half of the buffer
-	b ld = true;
+	b ld = t;
 	
 	// Initial board
 	(a > o+i) ? (ld = !rf(i[V]))oo;
