@@ -36,6 +36,7 @@
 
 #define O foo[v--](0,0);
 #define o 0
+#define oo :o
 #define bar(x) foo[x]();
 #define b bool
 #define g (unsigned int)foo[5](x, y)
@@ -71,8 +72,8 @@ int gnd(int x, int y)
 			int xt = dx;
 			int yt = dy;
 
-			(xt < o) ? (xt = w -1) : ((xt >= w ) ? (xt = o) : o);
-			(yt < o) ? (yt = h-1) : ((yt >= h) ? (yt = o) : o);
+			(xt < o) ? (xt = w -1) : ((xt >= w ) ? (xt = o) oo);
+			(yt < o) ? (yt = h-1) : ((yt >= h) ? (yt = o) oo);
 
 			p[gi(xt, yt)] ? nrED++:o;
 		}
@@ -85,8 +86,8 @@ int ul(int x, int y)
 	p[gi(x,y)] ? ((!((g-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((g == IS[10]) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
-	(x >= w) ? (x = o,	y++) : o;
-	(y < h+1) ?  (foo[2](x, y), x=x) : o;
+	(x >= w) ? (x = o,	y++) oo;
+	(y < h+1) ?  (foo[2](x, y), x=x) oo;
 	r0
 }
 
@@ -138,9 +139,9 @@ notEOF:
 			goto done;
 		}
 		
-		sol ? (sol = false, (ch == COMMENT) ? sl = true : o) : o;
-		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:o);
-		(x >= w) ? (x = o, y++) : o;
+		sol ? (sol = false, (ch == COMMENT) ? sl = true oo) oo;
+		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++oo);
+		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h)
 		{
@@ -170,8 +171,8 @@ int main(int a, char **V)
 	b ld = true;
 	
 	// Initial board
-	(a > 1) ? (ld = !rf(V[1])):o;
-	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : o;
+	(a > 1) ? (ld = !rf(V[1]))oo;
+	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) oo;
 	
 	foo[1](o);
 	
