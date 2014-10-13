@@ -6,13 +6,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define B 		(char *)IS
-#define C 		((IS[6]&0xff))
+#define B 		(char *)e
+#define C 		((e[6]&0xff))
 #define D 		addch(DEAD
-#define DEAD 	IS[7]
+#define DEAD 	e[7]
 #define E 		strlen(T)
-#define ED 		((IS[6]>>24)&0xff)
-#define F  		((IS[6]>>8)&0xff)
+#define ED 		((e[6]>>24)&0xff)
+#define F  		((e[6]>>8)&0xff)
 #define I 		foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 #define M 		memcpy((char*)a
 #define O 		foo[v--](0,0);
@@ -20,36 +20,36 @@
 #define S 		p = Y; c = Y; p = Y;
 #define Y 		(b*)((int)p ^ (int)c)
 #define T 		(char*)X
-#define X 		&IS[4]
+#define X 		&e[4]
 
 #define a(x,y) 	(y*w + x)
 #define b 		bool
 #define d(x) 	foo[x]();
 #define g 		(unsigned)foo[5](x, y)
-#define h 		IS[8]
+#define h 		e[8]
 #define i 		1
 #define o 		0
 #define oo 		:o
 #define r 		return(0);
 #define s 		(h*w)
 #define t 		true
-#define w 		IS[9]
+#define w 		e[9]
 
 int (*foo[10])();
 b *c, *p;
-//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]  |IS[9]  |IS[10]|
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
+//                   |Iteration               End of Iteration|  | .life         | e[6]     |e[7]|e[8]  |e[9]  |e[10]|
+unsigned int e[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
 
-int sIS(char *c)
+int se(char *c)
 {
 	char pv = o;
-	sIS:
+	se:
 	if(*c)	// Only do something when we are not at the end
 	{
 		*c += pv;
 		pv = *c;
 		c++;
-		goto sIS;
+		goto se;
 	}
 	r
 }
@@ -76,7 +76,7 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == IS[10]) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
+	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == e[10]) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
@@ -130,7 +130,7 @@ notEOF:
 		if(ch == EOF)goto done;
 		
 		il ? (il = !t, (ch == C) ? li = t oo) oo;
-		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
+		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(isspace(ch) || ch == ((e[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
@@ -147,7 +147,7 @@ int main(int a, char **V)
 	i[foo] = pl;
 	foo[2] = ul;
 	foo[3] = endwin;
-	foo[4] = sIS;
+	foo[4] = se;
 	foo[5] = gnd;
 	
 	I
