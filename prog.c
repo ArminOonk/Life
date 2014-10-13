@@ -80,7 +80,7 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[gi(x,y)] ? ((!(((unsigned int)gnd(x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((gnd(x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[gi(x,y)] ? ((!(((unsigned int)foo[5](x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((foo[5](x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
@@ -159,6 +159,8 @@ int main(int a, char **V)
 	foo[2] = ul;
 	foo[3] = endwin;
 	foo[4] = sIS;
+	foo[5] = gnd;
+	
 	I
 
 	c = calloc(size<<1, sizeof(b));// Create a double sized buffer  
