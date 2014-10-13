@@ -22,15 +22,15 @@
 #define T (char*)X
 #define X 	&IS[4]
 
+#define a(x,y) (y*w + x)
 #define b bool
-#define bar(x) foo[x]();
+#define d(x) foo[x]();
 #define g (unsigned)foo[5](x, y)
-#define gi(x,y) (y*w + x)
 #define h IS[8]
 #define i 1
 #define o 0
 #define oo :o
-#define r0 return(0);
+#define r return(0);
 #define s (h*w)
 #define w IS[9]
 
@@ -50,12 +50,12 @@ int sIS(char *c)
 		c++;
 		goto sIS;
 	}
-	r0
+	r
 }
 
 int gnd(int x, int y)
 {
-	int nrED; (p[gi(x, y)]) ? (nrED=-i) : (nrED=0);
+	int nrED; (p[a(x, y)]) ? (nrED=-i) : (nrED=0);
 	
 	for(int dy=(y-i); dy<= (y+i); dy++)
 	{
@@ -67,7 +67,7 @@ int gnd(int x, int y)
 			(xt < o*i) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
 			(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = i>>i) oo);
 
-			p[gi(xt, yt)] ? nrED++:o;
+			p[a(xt, yt)] ? nrED++:o;
 		}
 	}
 	return nrED;
@@ -75,12 +75,12 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[gi(x,y)] ? ((!((g-(i<<i))<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((g == IS[10]) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = false) : (c[a(x,y)] = true)) : ((g == IS[10]) ? (c[a(x,y)] = true) : (c[a(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
 	(y < h+i) ?  (foo[2](x, y), x=x) oo;
-	r0
+	r
 }
 
 int pl(int q, int j)
@@ -101,7 +101,7 @@ int pl(int q, int j)
 		q[c] ? D|ED) : D);
 		pl(q+i, 2);
 	}
-	r0
+	r
 }
 
 b rf(char *filename)
@@ -129,7 +129,7 @@ notEOF:
 		if(ch == EOF)goto done;
 		
 		sol ? (sol = false, (ch == C) ? sl = true oo) oo;
-		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
+		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[a(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
@@ -168,7 +168,7 @@ again:
 	int v=i+o+i;
 	O
 	O
-	a = bar(o);
+	a = d(o);
 	
 	if(a == F || a == (F-DEAD))
 		goto stop;
