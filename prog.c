@@ -179,7 +179,7 @@ again:
 	O
 	a = bar(o);
 	
-	if(a == STOP || a == (STOP-0x20))
+	if(a == STOP || a == (STOP-DEAD))
 		goto stop;
 	goto again;
 stop:	
