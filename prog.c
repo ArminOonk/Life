@@ -6,46 +6,39 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define gi(x,y) (y*w + x)
-#define size (h*w)
-
-#define SEXT (char*)EXT
-#define EL strlen(SEXT)
-#define EXT &IS[4]
-#define SIS (char *)IS
-
-#define P V[0]
-
-#define SX (b*)((int)p ^ (int)c)
-#define S p = SX; c = SX; p = SX;
-
-#define COMMENT ((IS[6]&0xff))
-#define STOP  	((IS[6]>>8)&0xff)
-#define EMPTY 	((IS[6]>>16)&0xff)
-#define ED 		((IS[6]>>24)&0xff)
-
-#define DEAD IS[7]
-#define h IS[8]
-#define w IS[9]
-
+#define C ((IS[6]&0xff))
 #define D addch(DEAD
-#define MC memcpy((char*)a
+#define DEAD IS[7]
+#define ED 		((IS[6]>>24)&0xff)
+#define EL strlen(SEXT)
+#define EMPTY 	((IS[6]>>16)&0xff)
+#define EXT &IS[4]
 #define I foo[4](SIS);foo[4](SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
-
-#define r0 return(0);
-
+#define MC memcpy((char*)a
 #define O foo[v--](0,0);
+#define P V[0]
+#define S p = SX; c = SX; p = SX;
+#define SEXT (char*)EXT
+#define SIS (char *)IS
+#define STOP  	((IS[6]>>8)&0xff)
+#define SX (b*)((int)p ^ (int)c)
+
+#define b bool
+#define bar(x) foo[x]();
+#define g (unsigned)foo[5](x, y)
+#define gi(x,y) (y*w + x)
+#define h IS[8]
+#define i 1
 #define o 0
 #define oo :o
-#define i 1
-#define bar(x) foo[x]();
-#define b bool
-#define g (unsigned int)foo[5](x, y)
+#define r0 return(0);
+#define size (h*w)
+#define w IS[9]
 
 int (*foo[10])();
 b *c, *p;
-//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]|IS[10]|
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00,  0x03}; // Game constants
+//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]  |IS[9]  |IS[10]|
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
 
 int sIS(char *c)
 {
@@ -63,8 +56,7 @@ int sIS(char *c)
 
 int gnd(int x, int y)
 {
-	int nrED;
-	(p[gi(x, y)]) ? (nrED=-i) : (nrED=0);
+	int nrED; (p[gi(x, y)]) ? (nrED=-i) : (nrED=0);
 	
 	for(int dy=(y-i); dy<= (y+i); dy++)
 	{
@@ -73,8 +65,8 @@ int gnd(int x, int y)
 			int xt = dx;
 			int yt = dy;
 
-			(xt < o) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
-			(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = o) oo);
+			(xt < o*i) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
+			(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = i>>i) oo);
 
 			p[gi(xt, yt)] ? nrED++:o;
 		}
@@ -84,7 +76,7 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[gi(x,y)] ? ((!((g-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((g == IS[10]) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[gi(x,y)] ? ((!((g-(i<<i))<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((g == IS[10]) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
@@ -137,7 +129,7 @@ notEOF:
 		
 		if(ch == EOF)goto done;
 		
-		sol ? (sol = false, (ch == COMMENT) ? sl = true oo) oo;
+		sol ? (sol = false, (ch == C) ? sl = true oo) oo;
 		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
