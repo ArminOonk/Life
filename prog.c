@@ -37,6 +37,7 @@
 #define O foo[v--](0,0);
 #define o 0
 #define oo :o
+#define i 1
 #define bar(x) foo[x]();
 #define b bool
 #define g (unsigned int)foo[5](x, y)
@@ -48,12 +49,12 @@ unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xf
 
 int sIS(char *c)
 {
-	char prev = o;
+	char pv = o;
 	sIS:
 	if(*c)	// Only do something when we are not at the end
 	{
-		*c += prev;
-		prev = *c;
+		*c += pv;
+		pv = *c;
 		c++;
 		goto sIS;
 	}
@@ -63,17 +64,17 @@ int sIS(char *c)
 int gnd(int x, int y)
 {
 	int nrED;
-	(p[gi(x, y)]) ? (nrED=-1) : (nrED=0);
+	(p[gi(x, y)]) ? (nrED=-i) : (nrED=0);
 	
-	for(int dy=(y-1); dy<= (y+1); dy++)
+	for(int dy=(y-i); dy<= (y+i); dy++)
 	{
-		for(int dx=(x-1); dx<=(x+1); dx++)
+		for(int dx=(x-i); dx<=(x+i); dx++)
 		{			
 			int xt = dx;
 			int yt = dy;
 
-			(xt < o) ? (xt = w -1) : ((xt >= w ) ? (xt = o) oo);
-			(yt < o) ? (yt = h-1) : ((yt >= h) ? (yt = o) oo);
+			(xt < o) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
+			(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = o) oo);
 
 			p[gi(xt, yt)] ? nrED++:o;
 		}
@@ -87,18 +88,18 @@ int ul(int x, int y)
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
-	(y < h+1) ?  (foo[2](x, y), x=x) oo;
+	(y < h+i) ?  (foo[2](x, y), x=x) oo;
 	r0
 }
 
-int pl(int i, int j)
+int pl(int q, int j)
 {
-	if(i == o)
+	if(q == o)
 	{
 		move(o,o);
 	}
 	
-	if (i >= size)
+	if (q >= size)
 	{
 		static int iteration;
 		mvprintw(o,o, SIS, iteration++);
@@ -106,8 +107,8 @@ int pl(int i, int j)
 	}
 	else
 	{
-		i[c] ? D|ED) : D);
-		pl(i+1, 2);
+		q[c] ? D|ED) : D);
+		pl(q+i, 2);
 	}
 	r0
 }
@@ -134,20 +135,13 @@ b rf(char *filename)
 notEOF:
 		ch = fgetc( readFP );
 		
-		if(ch == EOF)
-		{
-			goto done;
-		}
+		if(ch == EOF)goto done;
 		
 		sol ? (sol = false, (ch == COMMENT) ? sl = true oo) oo;
 		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
-		if(y >= h)
-		{
-			goto done;
-		}
-		goto notEOF;
+		if(y >= h) goto done; goto notEOF;
 	}	
 	done:
 	fclose(readFP);
@@ -158,7 +152,7 @@ notEOF:
 int main(int a, char **V)
 {		
 	foo[o] = getch;
-	foo[1] = pl;
+	i[foo] = pl;
 	foo[2] = ul;
 	foo[3] = endwin;
 	foo[4] = sIS;
@@ -166,21 +160,21 @@ int main(int a, char **V)
 	
 	I
 
-	c = calloc(size<<1, sizeof(b));// Create a double sized buffer  
+	c = calloc(size<<i, sizeof(b));// Create a double sized buffer  
 	p = c+size;				// Set p to half of the buffer
 	b ld = true;
 	
 	// Initial board
-	(a > 1) ? (ld = !rf(V[1]))oo;
-	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) oo;
+	(a > o+i) ? (ld = !rf(i[V]))oo;
+	ld ? (a = (int)calloc( strlen(P) + EL + i, i), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) oo;
 	
-	foo[1](o);
+	i[foo](o);
 	
 	while(foo[o]() == ERR);// Wait for user to press a button
 	
 again:
 	S
-	int v=2;
+	int v=i+o+i;
 	O
 	O
 	a = bar(o);
@@ -189,5 +183,5 @@ again:
 		goto stop;
 	goto again;
 stop:	
-	foo[3]();
+	foo[((i<<i)+i)]();
 }
