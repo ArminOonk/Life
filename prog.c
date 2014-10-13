@@ -26,7 +26,7 @@
 #define a(x,y) 	(y*w + x)
 #define b 		bool
 #define d(x) 	foo[x]();
-#define g 		(unsigned)foo[5](x, y)
+#define g 		(unsigned)foo[5](z, l)
 #define h 		e[8]
 #define i 		1
 #define o 		0
@@ -55,13 +55,13 @@ int se(char *c)
 	r
 }
 
-int gnd(int x, int y)
+int gnd(int y, int x)
 {
-	int nrED; (p[a(x, y)]) ? (nrED=-i) : (nrED=0);
+	int nrED; (p[a(y, x)]) ? (nrED=-i) : (nrED=0);
 	
-	for(int dy=(y-i); dy<= (y+i); dy++)
+	for(int dy=(x-i); dy<= (x+i); dy++)
 	{
-		for(int dx=(x-i); dx<=(x+i); dx++)
+		for(int dx=(y-i); dx<=(y+i); dx++)
 		{			
 			int xt = dx;
 			int yt = dy;
@@ -75,13 +75,13 @@ int gnd(int x, int y)
 	return nrED;
 }
 
-int ul(int x, int y)
+int ul(int z, int l)
 {
-	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == Q) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
-	x++;
+	p[a(z,l)] ? ((!((g-(i<<i))<2))? (c[a(z,l)] = !t) : (c[a(z,l)] = t)) : ((g == Q) ? (c[a(z,l)] = t) : (c[a(z,l)] = !t));
+	z++;
 	
-	(x >= w) ? (x = o,	y++) oo;
-	(y < h+i) ?  (foo[2](x, y), x=x) oo;
+	(z >= w) ? (z = o,	l++) oo;
+	(l < h+i) ?  (foo[2](z, l), z=z) oo;
 	r
 }
 
