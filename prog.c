@@ -35,22 +35,24 @@
 #define r0 return(0);
 
 #define O foo[v--](0,0);
+#define o 0
 #define bar(x) foo[x]();
 #define b bool
+#define g (unsigned int)foo[5](x, y)
 
 int (*foo[10])();
 b *c, *p;
-//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
-unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
+//                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]|IS[10]|
+unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00,  0x03}; // Game constants
 
 int sIS(char *c)
 {
-	char prev = 0;
+	char prev = o;
 	sIS:
-	if(c[0])	// Only do something when we are not at the end
+	if(*c)	// Only do something when we are not at the end
 	{
-		c[0] += prev;
-		prev = c[0];
+		*c += prev;
+		prev = *c;
 		c++;
 		goto sIS;
 	}
@@ -69,10 +71,10 @@ int gnd(int x, int y)
 			int xt = dx;
 			int yt = dy;
 
-			(xt < 0) ? (xt = w -1) : ((xt >= w ) ? (xt = 0) : 0);
-			(yt < 0) ? (yt = h-1) : ((yt >= h) ? (yt = 0) : 0);
+			(xt < o) ? (xt = w -1) : ((xt >= w ) ? (xt = o) : o);
+			(yt < o) ? (yt = h-1) : ((yt >= h) ? (yt = o) : o);
 
-			p[gi(xt, yt)] ? nrED++:0;
+			p[gi(xt, yt)] ? nrED++:o;
 		}
 	}
 	return nrED;
@@ -80,25 +82,25 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[gi(x,y)] ? ((!(((unsigned int)foo[5](x, y)-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((foo[5](x, y) == 3) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
+	p[gi(x,y)] ? ((!((g-2)<2))? (c[gi(x,y)] = false) : (c[gi(x,y)] = true)) : ((g == IS[10]) ? (c[gi(x,y)] = true) : (c[gi(x,y)] = false));
 	x++;
 	
-	(x >= w) ? (x = 0,	y++) : 0;
-	(y < h+1) ?  (foo[2](x, y), x=x) : 0;
+	(x >= w) ? (x = o,	y++) : o;
+	(y < h+1) ?  (foo[2](x, y), x=x) : o;
 	r0
 }
 
 int pl(int i, int j)
 {
-	if(i == 0)
+	if(i == o)
 	{
-		move(0,0);
+		move(o,o);
 	}
 	
 	if (i >= size)
 	{
 		static int iteration;
-		mvprintw(0,0, SIS, iteration++);
+		mvprintw(o,o, SIS, iteration++);
 		refresh();
 	}
 	else
@@ -125,8 +127,8 @@ b rf(char *filename)
 	{
 		retVal = true;
 
-		int x = 0;
-		int y = 0;
+		int x = o;
+		int y = o;
 		int ch;
 notEOF:
 		ch = fgetc( readFP );
@@ -136,9 +138,9 @@ notEOF:
 			goto done;
 		}
 		
-		sol ? (sol = false, (ch == COMMENT) ? sl = true : 0) : 0;
-		(ch == '\n') ? (y++, x=0, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:0);
-		(x >= w) ? (x = 0, y++) : 0;
+		sol ? (sol = false, (ch == COMMENT) ? sl = true : o) : o;
+		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++:o);
+		(x >= w) ? (x = o, y++) : o;
 		
 		if(y >= h)
 		{
@@ -154,7 +156,7 @@ notEOF:
 
 int main(int a, char **V)
 {		
-	foo[0] = getch;
+	foo[o] = getch;
 	foo[1] = pl;
 	foo[2] = ul;
 	foo[3] = endwin;
@@ -168,19 +170,19 @@ int main(int a, char **V)
 	b ld = true;
 	
 	// Initial board
-	(a > 1) ? (ld = !rf(V[1])):0;
-	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : 0;
+	(a > 1) ? (ld = !rf(V[1])):o;
+	ld ? (a = (int)calloc( strlen(P) + EL + 1, 1), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) : o;
 	
-	foo[1](0);
+	foo[1](o);
 	
-	while(foo[0]() == ERR);// Wait for user to press a button
+	while(foo[o]() == ERR);// Wait for user to press a button
 	
 again:
 	S
 	int v=2;
 	O
 	O
-	a = bar(0);
+	a = bar(o);
 	
 	if(a == STOP || a == (STOP-0x20))
 		goto stop;
