@@ -6,22 +6,21 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define B (char *)IS
 #define C ((IS[6]&0xff))
 #define D addch(DEAD
 #define DEAD IS[7]
+#define E 		strlen(T)
 #define ED 		((IS[6]>>24)&0xff)
-#define EL strlen(SEXT)
-#define EMPTY 	((IS[6]>>16)&0xff)
-#define EXT &IS[4]
-#define I foo[4](SIS);foo[4](SEXT);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
-#define MC memcpy((char*)a
+#define F  	((IS[6]>>8)&0xff)
+#define I foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
+#define M memcpy((char*)a
 #define O foo[v--](0,0);
 #define P V[0]
-#define S p = SX; c = SX; p = SX;
-#define SEXT (char*)EXT
-#define SIS (char *)IS
-#define STOP  	((IS[6]>>8)&0xff)
-#define SX (b*)((int)p ^ (int)c)
+#define S p = Y; c = Y; p = Y;
+#define Y (b*)((int)p ^ (int)c)
+#define T (char*)X
+#define X 	&IS[4]
 
 #define b bool
 #define bar(x) foo[x]();
@@ -32,7 +31,7 @@
 #define o 0
 #define oo :o
 #define r0 return(0);
-#define size (h*w)
+#define s (h*w)
 #define w IS[9]
 
 int (*foo[10])();
@@ -91,10 +90,10 @@ int pl(int q, int j)
 		move(o,o);
 	}
 	
-	if (q >= size)
+	if (q >= s)
 	{
 		static int iteration;
-		mvprintw(o,o, SIS, iteration++);
+		mvprintw(o,o, B, iteration++);
 		refresh();
 	}
 	else
@@ -130,7 +129,7 @@ notEOF:
 		if(ch == EOF)goto done;
 		
 		sol ? (sol = false, (ch == C) ? sl = true oo) oo;
-		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == EMPTY)), x++oo);
+		(ch == '\n') ? (y++, x=o, sol = true, sl = false) : ((!sl)?	(c[gi(x,y)] = !(isspace(ch) || ch == ((IS[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
@@ -152,13 +151,13 @@ int main(int a, char **V)
 	
 	I
 
-	c = calloc(size<<i, sizeof(b));// Create a double sized buffer  
-	p = c+size;				// Set p to half of the buffer
+	c = calloc(s<<i, sizeof(b));// Create a double sized buffer  
+	p = c+s;				// Set p to half of the buffer
 	b ld = true;
 	
 	// Initial board
 	(a > o+i) ? (ld = !rf(i[V]))oo;
-	ld ? (a = (int)calloc( strlen(P) + EL + i, i), MC, P, strlen(P)), MC+strlen(P), EXT, EL), rf((char*)a)) oo;
+	ld ? (a = (int)calloc( strlen(P) + E + i, i), M, P, strlen(P)), M+strlen(P), X, E), rf((char*)a)) oo;
 	
 	i[foo](o);
 	
@@ -171,7 +170,7 @@ again:
 	O
 	a = bar(o);
 	
-	if(a == STOP || a == (STOP-DEAD))
+	if(a == F || a == (F-DEAD))
 		goto stop;
 	goto again;
 stop:	
