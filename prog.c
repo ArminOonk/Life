@@ -17,6 +17,7 @@
 #define M 		memcpy((char*)a
 #define O 		foo[v--](0,0);
 #define P 		V[0]
+#define Q 		e[10]
 #define S 		p = Y; c = Y; p = Y;
 #define Y 		(b*)((int)p ^ (int)c)
 #define T 		(char*)X
@@ -37,7 +38,7 @@
 
 int (*foo[10])();
 b *c, *p;
-//                   |Iteration               End of Iteration|  | .life         | e[6]     |e[7]|e[8]  |e[9]  |e[10]|
+//                 |Iteration               End of Iteration| | .life           | e[6]      |e[7] |e[8]   |e[9]   |e[10]|
 unsigned int e[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
 
 int se(char *c)
@@ -76,7 +77,7 @@ int gnd(int x, int y)
 
 int ul(int x, int y)
 {
-	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == e[10]) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
+	p[a(x,y)] ? ((!((g-(i<<i))<2))? (c[a(x,y)] = !t) : (c[a(x,y)] = t)) : ((g == Q) ? (c[a(x,y)] = t) : (c[a(x,y)] = !t));
 	x++;
 	
 	(x >= w) ? (x = o,	y++) oo;
@@ -107,7 +108,7 @@ int pl(int q, int j)
 
 b rf(char *filename)
 {
-	b retVal = !t;
+	b z = !t;
 	FILE *f = fopen(filename, "r");
 	if(f == NULL)
 	{
@@ -119,18 +120,18 @@ b rf(char *filename)
 	
 	if ( f != NULL )
 	{
-		retVal = t;
+		z = t;
 
 		int x = o;
 		int y = o;
 		int ch;
 notEOF:
-		ch = fgetc( f );
+		ch = foo[7]( f );
 		
 		if(ch == EOF)goto done;
 		
 		il ? (il = !t, (ch == C) ? li = t oo) oo;
-		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(isspace(ch) || ch == ((e[6]>>16)&0xff))), x++oo);
+		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(foo[6](ch) || ch == ((e[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
@@ -138,17 +139,20 @@ notEOF:
 	done:
 	fclose(f);
 	
-	return retVal;
+	return z;
 }
 
 int main(int a, char **V)
-{		
+{	
+	foo[1<<2] = se;	
+	foo[2*Q] = isspace;
+	foo[5] = gnd;
+	foo[7] = fgetc;
+	
 	foo[o] = getch;
 	i[foo] = pl;
-	foo[2] = ul;
-	foo[3] = endwin;
-	foo[4] = se;
-	foo[5] = gnd;
+	foo[Q^i] = ul;
+	Q[foo] = endwin;
 	
 	I
 
