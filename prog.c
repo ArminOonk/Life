@@ -38,6 +38,7 @@
 #define bar(x) foo[x]();
 #define b bool
 
+int (*foo[10])();
 b *c, *p;
 //                   |Iteration               End of Iteration|  | .life         | IS[6]     |IS[7]|IS[8]|IS[9]
 unsigned int IS[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0x00, 0x00}; // Game constants
@@ -83,7 +84,7 @@ int ul(int x, int y)
 	x++;
 	
 	(x >= w) ? (x = 0,	y++) : 0;
-	(y < h+1) ?  (ul(x, y), x=x) : 0;
+	(y < h+1) ?  (foo[2](x, y), x=x) : 0;
 	r0
 }
 
@@ -151,10 +152,13 @@ notEOF:
 	return retVal;
 }
 
-int (*foo[])() = {getch, pl, ul, endwin, sIS};
-
 int main(int a, char **V)
 {		
+	foo[0] = getch;
+	foo[1] = pl;
+	foo[2] = ul;
+	foo[3] = endwin;
+	foo[4] = sIS;
 	I
 
 	c = calloc(size<<1, sizeof(b));// Create a double sized buffer  
