@@ -54,17 +54,23 @@
         ()       ;
         b *    c  ,
         *        p;
-         /*                                   #*/Z int se(char *c){char pv=o;se:if(
+         /*                                        #*/Z int se(char *c){char pv=o;se:if(
+		 
          *  c     ) {*                                           /*#*/c+=pv   
-         ;         pv =                      /*#*/*c;c++;goto se;}r}int gnd(int y, int x){int nrED;                  
+		 
+         ;         pv =                      /*#*/*c;c++;goto se;}r}int gnd(int y, int x){int nrED;   
+		 
            ( p      [a  (
             y, x    )]   ) 
                 ?       (
                nrED   = -
-               i ):   /**/                                /*#*/(nrED            
+               i ):   /**/                                /*#*/(nrED  
+			   
                 =   0) ;                                                /*#*/ u int        
+				
                      xt
                  = dx;                                     /*#*/int yt=dy;(xt 
+				 
                   <  o
 
 

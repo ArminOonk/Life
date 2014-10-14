@@ -227,15 +227,19 @@ bool readFile(bool *current, char *filename)
 			if(startOfLine)
 			{
 				startOfLine = false;
-				if(ch == '!')
-				{
-					skipLine = true;
-				}
+			}
+			
+			if(ch == '#')
+			{
+				skipLine = true;
 			}
 			
 			if(ch == '\n')
 			{
-				y++;
+				if(!skipLine)
+				{
+					y++;
+				}
 				x=0;
 				startOfLine = true;
 				skipLine = false;
