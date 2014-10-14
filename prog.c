@@ -40,14 +40,14 @@
 
 int (*m[10])();
 b *c, *p;
-//                 |Iteration               End of Iteration| | .life           | e[6]      |e[7] |e[8]   |e[9]   |e[10]|
-unsigned e[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7121, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
+//             |Iteration               End of Iteration| | .life           | e[6]      |e[7] |e[8]   |e[9]   |e[10]|
+unsigned e[] = {0x0df12b49, 0x06f513ef, 0x05e6ccff, 0x9c3f, 0xfdfd3e2e, 0xff, 0x0a2e7123, 0x20, 0xdead, 0xbeef,  0x03}; // Game constants
 
 int se(char *c)
 {
 	char pv = o;
 	se:
-	if(*c)	// Only do something when we are not at the end
+	if(*c)
 	{
 		*c += pv;
 		pv = *c;
@@ -59,19 +59,15 @@ int se(char *c)
 
 int gnd(int y, int x)
 {
-	int nrED; (p[a(y, x)]) ? (nrED=-i) : (nrED=0);
+int nrED; (p[a(y, x)]) ? (nrED=-i) : (nrED=0);
 	
-u			
-			int xt = dx;
-			int yt = dy;
+u int xt = dx;
+int yt = dy;
 
-			(xt < o*i) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
-			(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = i>>i) oo);
+(xt < o*i) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);
+(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = i>>i) oo);
 
-			p[a(xt, yt)] ? nrED++:o;
-		}
-	}
-	return nrED;
+p[a(xt, yt)] ? nrED++:o;}}return nrED;
 }
 
 int ul(int z, int l)
@@ -130,7 +126,7 @@ notEOF:
 		if(ch == EOF)goto done;
 		
 		il ? (il = !t, (ch == C) ? li = t oo) oo;
-		(ch == '\n') ? (y++, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(m[6](ch) || ch == ((e[6]>>16)&0xff))), x++oo);
+		(ch == '\n') ? ((!li)?y++ oo, x=o, il = t, li = !t) : ((!li)?	(c[a(x,y)] = !(m[6](ch) || ch == ((e[6]>>16)&0xff))), x++oo);
 		(x >= w) ? (x = o, y++) oo;
 		
 		if(y >= h) goto done; goto notEOF;
