@@ -13,7 +13,7 @@
 #define E 		strlen(T)
 #define ED 		((e[6]>>24)&0xff)
 #define F  		((e[6]>>8)&0xff)
-#define I 		foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
+#define I 		foo[8](&foo[5], 7);foo[4](B);foo[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 #define M 		memcpy((char*)a
 #define O 		foo[v--](0,0);
 #define P 		V[0]
@@ -142,13 +142,19 @@ notEOF:
 	return z;
 }
 
+int f(int j, int k)
+{
+foo[k&0xc4] = se;
+foo[k^0x02] = gnd;
+foo[k] = fgetc;
+r
+}
+
 int main(int a, char **V)
 {	
-	foo[1<<2] = se;	
+	foo[8] = f;
 	foo[2*Q] = isspace;
-	foo[5] = gnd;
-	foo[7] = fgetc;
-	
+		
 	foo[o] = getch;
 	i[foo] = pl;
 	foo[Q^i] = ul;
