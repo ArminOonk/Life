@@ -142,10 +142,10 @@ notEOF:
 	return z;
 }
 
-int f(int j, int k)
+int f(int (**j)(), int k)
 {
 foo[k&0xc4] = se;
-foo[k^0x02] = gnd;
+*j = gnd;
 foo[k] = fgetc;
 r
 }
