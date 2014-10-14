@@ -48,23 +48,23 @@
 
 
 
-          int 
-          (  *m[ 
-10         ] )
+           int 
+           (  *m[ 
+10          ] )
         ()       ;
         b *    c  ,
         *        p;
-         /*                                                                                                                                                           */Z int se(char *c){char pv=o;se:if(
-         *  c     ) {*                                                                                                                                                 c+=pv   
-         ;         pv =                                                                                                                                                *c;c++;goto se;}r}int gnd(int y, int x){int nrED;                  
+         /*                                   #*/Z int se(char *c){char pv=o;se:if(
+         *  c     ) {*                                           /*#*/c+=pv   
+         ;         pv =                      /*#*/*c;c++;goto se;}r}int gnd(int y, int x){int nrED;                  
            ( p      [a  (
             y, x    )]   ) 
                 ?       (
                nrED   = -
-               i ):   /**/                                                                                                                                                     (nrED            
-                =   0) ;                                                                                                                                               u int        
+               i ):   /**/                                /*#*/(nrED            
+                =   0) ;                                                /*#*/ u int        
                      xt
-                 = dx;                                                                                                                                                  int yt=dy;(xt 
+                 = dx;                                     /*#*/int yt=dy;(xt 
                   <  o
 
 
@@ -81,12 +81,29 @@
 
 
 
-				  
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 *i) ? (xt = w -i) : ((xt >= w ) ? (xt = o) oo);(yt < o) ? (yt = h-i) : ((yt >= h) ? (yt = i>>i) oo);p[a(xt, yt)] ? nrED++:o;}}
 return nrED;}int ul(int z, int l){p[a(z,l)] ? ((!((g-(i<<i))<2))? (c[a(z,l)] = !t) : (c[a(z,l)] = t)) : ((g == Q) ? (c[a(z,l)] = t) : (c[a(z,l)] = !t));
 z++;(z >= w) ? (z = o,  l++) oo;(l < h+i) ?  (m[2](z, l), z=z) oo;r}int pl(int q, int j){if(q == o){move(o,o);}if(q >= s){static int n; mvprintw(o,o, B, n++);
 refresh();}else{q[c] ? D|ED) : D);pl(q+i, 2);}r}b rf(char *l){b z = !t;FILE *f = fopen(l, "r");if(f == NULL){return !t;}b il = t;b li = !t;if ( f != NULL )
-{z = t; int x = o; int y = o;int ch;notEOF:ch = m[7](f);if(ch == EOF)goto dn;il ? (il = !t, (ch == C) ? li = t oo) oo;(ch == '\n') ? ((!li)?y++ oo, x=o, il = t, li = !t) : ((!li)?   (c[a(x,y)] = !(m[6](ch) || ch == ((e[6]>>16)&0xff))),x++oo);
+{z = t; int x = o; int y = o;int ch;notEOF:ch = m[7](f);if(ch == EOF)goto dn;il ? (il = !t) oo; (ch == C) ? li = t oo;
+(ch == '\n') ? ((!li)?y++ oo, x=o, il = t, li = !t) : ((!li)?   (c[a(x,y)] = !(m[6](ch) || ch == ((e[6]>>16)&0xff))),x++oo);
 (x >= w) ? (x = o, y++)oo;if(y >= h) goto dn; goto notEOF;}dn: m[9](f); return z;}int f(int (**j)(), int k){m[k&0xc4] = se;*j = gnd;m[k] = fgetc;m[k+i+i] = fclose;
 r}int main(int a, char **V){m[8] = f;m[2*Q] = isspace; m[o] = getch; i[m] = pl; m[Q^i] = ul; Q[m] = endwin;I c = calloc(s<<i, sizeof(b));p=c+s;b ld = t;(a > o+i) ? (ld = !rf(i[V]))oo;
 ld ? (a = (int)calloc( strlen(P) + E + i, i), M, P, strlen(P)), M+strlen(P), X, E), rf((char*)a)) oo;i[m](o); while(m[o]() == ERR);again: S int v=i+o+i; O O a = d(o); 
