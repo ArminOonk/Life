@@ -34,6 +34,7 @@
 #define r 		return(0);
 #define s 		(h*w)
 #define t 		true
+#define u 	for(int dy=(x-i); dy<= (x+i); dy++){for(int dx=(y-i); dx<=(y+i); dx++){
 #define w 		e[9]
 
 int (*m[10])();
@@ -59,10 +60,7 @@ int gnd(int y, int x)
 {
 	int nrED; (p[a(y, x)]) ? (nrED=-i) : (nrED=0);
 	
-	for(int dy=(x-i); dy<= (x+i); dy++)
-	{
-		for(int dx=(y-i); dx<=(y+i); dx++)
-		{			
+u			
 			int xt = dx;
 			int yt = dy;
 
