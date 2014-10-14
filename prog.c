@@ -13,6 +13,7 @@
 #define E 		strlen(T)
 #define ED 		((e[6]>>24)&0xff)
 #define F  		((e[6]>>8)&0xff)
+#define G		for(int
 #define I 		m[8](&m[5], 7);m[4](B);m[4](T);initscr();getmaxyx(stdscr,h,w);halfdelay(1);start_color();init_pair(1, COLOR_RED, COLOR_WHITE);attron(COLOR_PAIR(1));curs_set(0);
 #define M 		memcpy((char*)a
 #define O 		m[v--](0,0);
@@ -34,7 +35,7 @@
 #define r 		return(0);
 #define s 		(h*w)
 #define t 		true
-#define u 	for(int dy=(x-i); dy<= (x+i); dy++){for(int dx=(y-i); dx<=(y+i); dx++){
+#define u 		G dy=(x-i); dy<= (x+i); dy++){G dx=(y-i); dx<=(y+i); dx++){
 #define w 		e[9]
 
 int (*m[10])();
