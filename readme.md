@@ -11,8 +11,8 @@ This entry depends on ncurses.
 How to use
 ----------
 
-The real fun starts when users input is used. Only one argument is accepted which is the input data file. A good example is to run "./prog prog.c". In this case it will use its source file as input file. 
-To be able to run this a reasonable sized screen is required (Tested with 179 columns & 52 rows). When a sufficiently large screen resolution is used the source file will result in a stabile demo.
+The real fun starts when user input is used. The best example is to run "./prog prog.c". In this case it will use its source file as input file. 
+To be able to run this a reasonable sized screen is required (Tested with 179 columns & 52 rows). When a sufficiently large screen resolution is used the source file will result in a stable demo.
 Smaller screens will result in cropping of the input file.
 
 When running without an argument ./prog.c it looks for its demo file called: "<file name>.life" so "prog.life" in this case.
