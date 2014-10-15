@@ -22,6 +22,8 @@ int main(int argc, char **argv)
 	initscr();						// start the curses mode
 	getmaxyx(stdscr,height,width);	// get the number of heights and widthumns
 	halfdelay(1);					// Set timeout on getch()
+
+	printf("Height: %d Width: %d\n", height, width);
 	
 	start_color();					// Start color
 	init_pair(1, COLOR_RED, COLOR_WHITE);	// Create pair
