@@ -4,7 +4,7 @@ IOCCC submission
 How to build
 ------------
 
-Use the make file. When trying to do it manually: cc prog.c -o prog -Wall -pedantic -std=c99  -O2 -lncurses
+Use the make file or when trying to do it manually: cc prog.c -o prog -Wall -pedantic -std=c99  -O2 -lncurses
 
 This entry depends on ncurses
 
@@ -18,3 +18,15 @@ To be able to run this a reasonable sized screen is required (Tested with 179 co
 Smaller screens will result in cropping of the input file.
 
 Online a lot of demo's can be found. Small conversion with a text editor might be required.
+
+Obfuscation
+-----------
+* Sorry for the blob on the end
+* Short variable/function names
+* Strings are obfuscated
+* Not following a coding convention
+* Use of function pointer. (Next time I will integrate these on a much lower level)
+* a[b] == b[a]
+* Ignore my own rules
+* goto next_point;
+* next_point: Try a different looping strategy in every function
