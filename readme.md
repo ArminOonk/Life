@@ -30,3 +30,8 @@ Obfuscation
 * Ignore my own rules
 * goto next_point;
 * next_point: Try a different looping strategy in every function
+* Put stuff together in one unit which is not related
+
+More
+----
+https://github.com/ArminOonk/Life/
